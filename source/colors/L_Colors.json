@@ -1,10 +1,11 @@
 {
-    "PRIMARY": "#9ABF80",
-    "SECONDARY": "#6A669D",
+    "PRIMARY": "#001F3F",
+    "SECONDARY": "#3A6D8C",
     "D_WHITE": "white",
     "D_BLACK": "black",
-    "HEADER_BG": "#9ABF80",
+    "HEADER_BG": "#3A6D8C",
     "SIGNAL_WHITE": "#F2F2F7",
     "ALERTBOX_BG": "#F2F2F7",
-    "LIGHT_RED": "#F89580"
+    "LIGHT_RED": "#F89580",
+    "INPUT_TEXT_LABLE_COL":"#1C325B",
 }

@@ -11,8 +11,10 @@ import AlertBox from "./AlertBoxCompo";
 import BottomSheetX from "./XCompos/BottomSheetXCompo";
 import ImageX from "./XCompos/ImageXCompo";
 import ScrLoader from "./ScrLoaderCompo";
+import FriendsItem from "./FriendsItemCompo";
+import ExpenseListingItem from "./ExpenseListingItemCompo";
 
 export {
     PressX, MasterView, HeaderX, StatusBarX, TextX, TextInputX, ImageX, ViewX, ButtonX,
-    AlertBox, BottomSheetX, ScrLoader
+    AlertBox, BottomSheetX, ScrLoader, FriendsItem, ExpenseListingItem
 }

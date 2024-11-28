@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, } from 'react-native'
+import { View, StyleSheet, Image, ImageBackground, } from 'react-native'
 import React, { memo, useMemo, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { defStyType, HeaderType } from 'Types';
@@ -10,7 +10,7 @@ import { bSpace, headerHeight } from 'utils';
 import { useThemeX } from 'hooks';
 import ViewXCompo from './ViewXCompo';
 import { BACK_IC } from 'assets/svgs';
-import { APP_LOGO_IMG } from 'assets';
+import { IMG_1 } from 'assets';
 
 /**
  * Custom Header Component
@@ -19,7 +19,8 @@ const HeaderXCompo = ({
     title, bPress, backBtn = true, lSvg, rSvg, tSty, hHeight, hBgColor,
     alignText = 'center', lHeight, rHeight, hShow, hMSty, hBtnColor,
     barStyle = 'light-content', sbColor, sbShow, sbTransition, appIcon,
-    titleCompo,
+    titleCompo, backBtnType, hBgImgResizeMode = 'cover', hBgImgSource, hBgImgURI,
+    hShadow,
 }: HeaderType) => {
 
     const navigation = useNavigation();
@@ -42,10 +43,9 @@ const HeaderXCompo = ({
         }
         return 0;
     }, [lH, rH]);
-    // var { x, y, width, height } = event.nativeEvent.layout;
 
     return (
-        <ViewXCompo style={hMSty} >
+        <View style={[hMSty]} >
             <StatusBarXCompo barStyle={barStyle} sbColor={sbColor ?? col.HEADER_BG} sbShow={sbShow} sbTransition={sbTransition} />
             {hShow && (<View style={[sty.mainSty, {
                 backgroundColor: hBgColor ?? col.HEADER_BG, height: hHeight ?? headerHeight, width: "100%"
@@ -56,18 +56,17 @@ const HeaderXCompo = ({
                         mSty={cpSty.headerBtn_mSty}
                         children={<BACK_IC color={hBtnColor} />}
                         onPress={bPress ? bPress : () => navigation.goBack()}
-                    />)}
-                    {lSvg}</View>
+                    />)}{lSvg}</View>
                 <View style={[sty.textView, { marginLeft: lM, marginRight: rM, alignItems: alignText, }]} >
-                    {appIcon && <Image
+                    {/* {appIcon && <Image
                         source={APP_LOGO_IMG}
                         style={{ height: "100%", aspectRatio: 1, }}
-                        resizeMode='contain' />}
+                        resizeMode='contain' />} */}
                     {titleCompo ? titleCompo : (title ? <TextXCompo tSty={{ ...tSty, ...cpSty.header_title_tSty }} >{title ?? ""}</TextXCompo> : "")}
                 </View>
                 <View onLayout={(event) => { setRH(event.nativeEvent.layout.width) }}>{rSvg}</View>
             </View>)}
-        </ViewXCompo>)
+        </View>)
 }
 
 export default memo(HeaderXCompo);

@@ -29,7 +29,10 @@ type colorType = typeof _COL & typeof D_Colors;
 type kBehaviorType = 'height' | 'position' | 'padding' | undefined;
 
 type AppStackParamListType = {
-    FriendsListingScr: any
+    FriendsListingScr: any;
+    AddFriendScr: any;
+    ExpenseListingScr: firendsListItemType;
+    AddExpenseScr: any;
 };
 
 type StackProps<RouteName extends keyof AppStackParamListType> = (
@@ -89,6 +92,9 @@ type HeaderType = {
     hBtnColor?: ColorValue;
     backBtnType?: "one" | "two";
     appIcon?: boolean;
+    hBgImgSource?: any
+    hBgImgURI?: string;
+    hBgImgResizeMode?: ResizeMode;
 } & StatusBarType;
 
 type TextXType = {
@@ -353,12 +359,13 @@ type setIAppStateType = {
 
 type appStoreType = IAppStateType & setIAppStateType;
 
-type firendsListOBJType = { [key: string]: firendsListType }
+type firendsListOBJType = { [key: string]: firendsListItemType }
 
-type firendsListType = {
+type firendsListItemType = {
     id?: string;
     name?: string;
     email?: string;
+    pImg?: any;
 }
 
 export type {
@@ -366,5 +373,5 @@ export type {
     kBehaviorType, HeaderType, PressXType, ViewPfType, TextXType, MasterViewType,
     StatusBarType, IAppStateType, defStyType, ViewXType, AlertType, TextInputXType,
     ApiCallType, ApiResType, ToastType, colorType, BottomSheetXType, setIAppStateType,
-    firendsListOBJType, firendsListType
+    firendsListOBJType, firendsListItemType
 }

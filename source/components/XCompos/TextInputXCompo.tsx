@@ -194,7 +194,7 @@ const styFN = ({ col, font }: defStyType) => StyleSheet.create({
     lable_tSty: {
         fontFamily: font.REGULAR,
         fontSize: Size(14),
-        color: col.PLATINUM_GREY,
+        color: col.INPUT_TEXT_LABLE_COL,
         fontWeight: '400',
     },
     inputSty: {

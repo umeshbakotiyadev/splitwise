@@ -5,7 +5,7 @@ import { FONT } from 'assets';
 import { useMemo } from 'react';
 import { defStyType } from 'Types';
 import useString from 'language';
-import { CompoStyFN } from 'styles';
+import { CompoStyFN, FriendListingScrStyFN } from 'styles';
 
 /**
  * CONFIG FOR ALL THEMES RELATED GLOBAL VARIABLES OR MORE.
@@ -32,10 +32,12 @@ const useThemeXHook = () => {
     const defStyObj: defStyType = { ...sAI, col, font, dwFN };
 
     const cpSty = CompoStyFN(defStyObj);
+    const friListSty = FriendListingScrStyFN(defStyObj);
 
     return ({
         ...sAI, defStyObj, font, col, theme, dwFN, str,
-        cpSty
+        cpSty, 
+        friListSty
     });
 
 }

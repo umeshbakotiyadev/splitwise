@@ -48,7 +48,7 @@ const MasterViewCompo = ({
     }
 
     return (
-        <View style={{ backgroundColor: bgCol ? bgCol : col.D_WHITE, flex: 1 }}>
+        <View style={{ backgroundColor: bgCol ? bgCol : col.D_WHITE, flex: 1 }} >
             {(header ? header : <HeaderXCompo {...headerProps} />)}
             <KeyboardAvoidingView behavior={kAvoidSty}
                 style={{ flex: 1, backgroundColor: bgCol2 ? bgCol2 : bgCol, overflow: 'hidden' }}>

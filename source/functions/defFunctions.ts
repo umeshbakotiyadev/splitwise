@@ -1,4 +1,5 @@
-import { ViewXType, colorType, firendsListOBJType, firendsListType } from "Types";
+import { ViewXType, colorType, firendsListOBJType, firendsListItemType } from "Types";
+import { IMG_1, IMG_10, IMG_11, IMG_12, IMG_2, IMG_3, IMG_4, IMG_5, IMG_7, IMG_8, IMG_9 } from "assets";
 import { strType } from "language";
 import { Dimensions, Linking, Platform, ViewStyle } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -128,17 +129,21 @@ const cardShadow = (col: colorType) => ({
 
 const compressTextFN = (text?: any) => String(text || "").replace(/\s+/g, '').toLowerCase();
 
-function makeFriendsListForLocalStoreFN(data: Array<firendsListType>): firendsListOBJType {
+function makeFriendsListForLocalStoreFN(data: Array<firendsListItemType>): firendsListOBJType {
     const dataOBJ: firendsListOBJType = {};
     data.forEach(ele => {
-        // if (!ele?.id) return;
-        dataOBJ[ele?.id ?? generateUniqueID()] = ele;
+        if (!ele?.email) return;
+        const fID = ele?.id ?? generateUniqueID();
+        dataOBJ[ele?.email ?? "--"] = { ...ele, id: fID };
     });
     return dataOBJ;
 }
 
+const getRandomNumFN = (max: number): number => Math.ceil(Math.random() * max);
+const getRandomImgFN = (): any => ([IMG_1, IMG_2, IMG_3, IMG_4, IMG_5, IMG_7, IMG_8, IMG_9, IMG_10, IMG_11, IMG_12])[getRandomNumFN(11)];
+
 export {
     isUrl, Size, deepClone, isValid, defStyFN, _WIDTH, _HEIGHT, isErr,
     generateUniqueID, toNum, cardShadow, toJSON, compressTextFN, LOG,
-    makeFriendsListForLocalStoreFN
+    makeFriendsListForLocalStoreFN, getRandomNumFN, getRandomImgFN
 }
