@@ -41,7 +41,10 @@ const FriendsListingController = () => {
                 LOG(makeFriendsListForLocalStoreFN(data))
                 setFriensListData(makeFriendsListForLocalStoreFN(data));
             }
-        });
+            setBottomLoading(false); setTopLoading(false); setScrLoading(false);
+        }).finally(() => {
+            setBottomLoading(false); setTopLoading(false); setScrLoading(false);
+        });;
     }
 
     useEffect(() => {
@@ -49,7 +52,7 @@ const FriendsListingController = () => {
     }, []);
 
     return (
-        <MasterView bgCol={'red'} fixed >
+        <MasterView fixed hShow={false} >
             <FlatList
                 ref={flatListRef} refreshing
                 data={Object.entries(firendsList)}
@@ -58,7 +61,7 @@ const FriendsListingController = () => {
                 keyExtractor={(item, index) => index.toString()}
                 refreshControl={<RefreshControl
                     refreshing={topLoading}
-                    colors={[col.DEEP_SEA_BLUE, col.PRIMARY]}
+                    colors={[col.PRIMARY, col.PRIMARY]}
                     onRefresh={() => {
                         getFriendsList({ topRefresh: true });
                     }}
