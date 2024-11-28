@@ -12,7 +12,7 @@ import AlertBoxCompo from 'components/AlertBoxCompo';
 import ScrLoaderCompo from 'components/ScrLoaderCompo';
 
 /**
- * Master View
+ * MASTER VIEW
  * its can handle default view of device like 
  * top navigation bar, bottom tab navigation bar, header
  * its can handle screen default view is scrollable or fixed.
@@ -26,7 +26,9 @@ const MasterViewCompo = ({
     autoAdujKeyInsets, bounces, onScroll, keyboardShouldPersistTaps = 'always',
     modals, bSvg, tSvg, bgImgUri, bgImgSource, scrollEnabled,
 
-    /** header props */
+    /**
+     * HEADER PROPS 
+     **/
     title, titleCompo, bPress, backBtn = true, lSvg, rSvg, tSty, hHeight, hBgColor,
     alignText = 'center', lHeight, rHeight, hShow = true, hMSty,
     barStyle, sbColor, sbShow = true, sbTransition, hShadow,

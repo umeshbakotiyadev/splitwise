@@ -5,7 +5,7 @@ module.exports = {
     ["module-resolver", {
       "root": ['./source'],
       "extensions": [".tsx", ".ts", ".js", ".jsx", ".json", ".jsonc"],
-      "alias": { "*": "./source/", "@": "./source/", }
+      "alias": { "*": "./source/", }
     }],
     ["module:react-native-dotenv", {
       "envName": "APP_ENV",

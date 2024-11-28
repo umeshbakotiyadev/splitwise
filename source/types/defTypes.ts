@@ -28,7 +28,9 @@ type colorType = typeof _COL & typeof D_Colors;
 
 type kBehaviorType = 'height' | 'position' | 'padding' | undefined;
 
-type AppStackParamListType = { };
+type AppStackParamListType = {
+    FriendsListingScr: any
+};
 
 type StackProps<RouteName extends keyof AppStackParamListType> = (
     StackScreenProps<AppStackParamListType, RouteName, "AppStack">
@@ -342,18 +344,27 @@ type ToastType = {
 
 type IAppStateType = {
     appName: string;
+    firendsList: firendsListOBJType;
 }
 
 type setIAppStateType = {
-    // setUserData: (userData: userDataType) => void;
+    setFriensListData: (userData: firendsListOBJType) => void;
 }
 
 type appStoreType = IAppStateType & setIAppStateType;
 
+type firendsListOBJType = { [key: string]: firendsListType }
+
+type firendsListType = {
+    id?: string;
+    name?: string;
+    email?: string;
+}
+
 export type {
-    StackProps, AppStackParamListType,
+    StackProps, AppStackParamListType, appStoreType,
     kBehaviorType, HeaderType, PressXType, ViewPfType, TextXType, MasterViewType,
     StatusBarType, IAppStateType, defStyType, ViewXType, AlertType, TextInputXType,
-    ApiCallType, ApiResType, ToastType, colorType, BottomSheetXType, setIAppStateType, 
-    appStoreType,
+    ApiCallType, ApiResType, ToastType, colorType, BottomSheetXType, setIAppStateType,
+    firendsListOBJType, firendsListType
 }

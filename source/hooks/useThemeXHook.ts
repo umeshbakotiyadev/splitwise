@@ -5,6 +5,7 @@ import { FONT } from 'assets';
 import { useMemo } from 'react';
 import { defStyType } from 'Types';
 import useString from 'language';
+import { CompoStyFN } from 'styles';
 
 /**
  * CONFIG FOR ALL THEMES RELATED GLOBAL VARIABLES OR MORE.
@@ -30,10 +31,11 @@ const useThemeXHook = () => {
     /** THIS IS FOR DYNAMIC VARIABLES USE IN STYLES FUNCTIONS */
     const defStyObj: defStyType = { ...sAI, col, font, dwFN };
 
-    // const sInSty = SignInFlowStyFN(defStyObj);
+    const cpSty = CompoStyFN(defStyObj);
 
     return ({
         ...sAI, defStyObj, font, col, theme, dwFN, str,
+        cpSty
     });
 
 }

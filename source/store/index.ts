@@ -11,11 +11,14 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 const useAppStore = create<appStoreType>()(
     persist((set) => ({
         ...appStoreObj,
+        setFriensListData: by => set((state) => ({
+            firendsList: { ...state?.firendsList, ...by }
+        })),
     }), {
         "name": '@SplitWiseApp',
         "storage": createJSONStorage(() => zustandStorage),
         partialize: (state) => ({
-            // ...state,
+            ...state,
         }),
         onRehydrateStorage: (_/* state */) => {
             return async (state, error) => {

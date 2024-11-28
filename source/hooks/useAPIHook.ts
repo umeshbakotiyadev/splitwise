@@ -79,6 +79,21 @@ const useAPIHook = () => {
         }
     }
 
+    /**----------------------------**/
+    /** API LISTING PART <---> START **/
+    /**----------------------------**/
+
+    function getFriendsListAPI() {
+        return fetchREQ({
+            method: 'GET',
+            endPath: GET_ALL_USERS,
+        });
+    }
+
+    /**----------------------------**/
+    /** API LISTING PART <---> END **/
+    /**----------------------------**/
+
     /** THIS IS FOR ABORT API CALL */
     function abortAPI() { try { abort(); } catch (e) { /* LOG(e, "ERROR :: abortAPI =>>"); */ } }
 
@@ -93,6 +108,7 @@ const useAPIHook = () => {
 
     return {
         request, fetchREQ, abortAPI,
+        getFriendsListAPI,
     }
 }
 

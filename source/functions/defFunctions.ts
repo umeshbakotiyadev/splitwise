@@ -1,4 +1,4 @@
-import { ViewXType, colorType } from "Types";
+import { ViewXType, colorType, firendsListOBJType, firendsListType } from "Types";
 import { strType } from "language";
 import { Dimensions, Linking, Platform, ViewStyle } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -128,7 +128,17 @@ const cardShadow = (col: colorType) => ({
 
 const compressTextFN = (text?: any) => String(text || "").replace(/\s+/g, '').toLowerCase();
 
+function makeFriendsListForLocalStoreFN(data: Array<firendsListType>): firendsListOBJType {
+    const dataOBJ: firendsListOBJType = {};
+    data.forEach(ele => {
+        // if (!ele?.id) return;
+        dataOBJ[ele?.id ?? generateUniqueID()] = ele;
+    });
+    return dataOBJ;
+}
+
 export {
     isUrl, Size, deepClone, isValid, defStyFN, _WIDTH, _HEIGHT, isErr,
     generateUniqueID, toNum, cardShadow, toJSON, compressTextFN, LOG,
+    makeFriendsListForLocalStoreFN
 }

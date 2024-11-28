@@ -27,10 +27,11 @@ const isIOS = Platform.OS === 'ios' ? true : false;
 
 const initialState: IAppStateType = {
     appName: "useStore@Dev",
+    firendsList: {},
 };
 
 const setInitialState: setIAppStateType = {
-    // setIsLogin: (value: boolean) => { },
+    setFriensListData() { },
 }
 
 const appStoreObj: appStoreType = { ...initialState, ...setInitialState };
@@ -70,8 +71,8 @@ const maximumBirthDate = new Date(currentDate.getFullYear() - 18, currentDate.ge
 
 export {
     Stack, _HEIGHT, _WIDTH, kAvoidSty, hLine, bSpace, initialState, defStyObj, headerHeight, BtnHeight,
-    BottomTabStack, MIN_SKILL_LEVEL, MAX_SKILL_LEVEL, skillLevelNTRPArr, MIN_AGE, MAX_AGE, 
-    durationArr, SendMessageHeight, currentDate, maximumBirthDate, androidAPIVersion, isIOS, 
-    isANDROID, appStoreObj, setInitialState, MIN_SEARCH_RADIUS, MAX_SEARCH_RADIUS, matchTypeArr, 
+    BottomTabStack, MIN_SKILL_LEVEL, MAX_SKILL_LEVEL, skillLevelNTRPArr, MIN_AGE, MAX_AGE,
+    durationArr, SendMessageHeight, currentDate, maximumBirthDate, androidAPIVersion, isIOS,
+    isANDROID, appStoreObj, setInitialState, MIN_SEARCH_RADIUS, MAX_SEARCH_RADIUS, matchTypeArr,
     AddPostDescriptionLimit, IS_DEV, TENNIS_PAL_SUPPORT_CHAT_ID
 }
