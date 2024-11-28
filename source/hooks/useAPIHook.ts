@@ -1,29 +1,25 @@
 import { BackHandler, Platform } from 'react-native'
-import { ApiCallType, ApiResType, fetchXHRType, uploadDocsType } from 'Types';
-import { LOG, URLSearchParamsFN, isErr, toJSON } from 'functions';
-import { useCrashlytics, useThemeX } from 'hooks';
-import useAppStore from 'store';
+import { ApiCallType, ApiResType } from 'Types';
+import { LOG, isErr, toJSON } from 'functions';
+import { useThemeX } from 'hooks';
 import { IS_DEV, isANDROID, isIOS } from 'utils';
 import { useEffect, useRef } from 'react';
+import { BASE_API_DEV, BASE_API_PROD } from '@env';
 
 const useAPIHook = () => {
 
     const { abort, signal } = new AbortController();
     const { str } = useThemeX();
-    const { userData: { access_token } } = useAppStore();
-    const { _setCrashErrLog } = useCrashlytics();
 
     const request = useRef(new XMLHttpRequest());
 
     // END-POINTS
-    const ACCESS_TOKEN = "user/access_token";
+    const GET_ALL_USERS = "getUsersList";
 
     const headR = (token?: string, urlencoded?: boolean, multipart?: boolean) => {
         var Header = new Headers();
         Header.append("Accept", "application/json");
-        if (multipart) {
-            Header.append("Content-Type", "multipart/form-data");
-        }
+        if (multipart) Header.append("Content-Type", "multipart/form-data");
         else Header.append("Content-Type", urlencoded ? "application/x-www-form-urlencoded" : "application/json");
         token && Header.append("Authorization", `Bearer ${token}`);
         return Header;
@@ -59,11 +55,12 @@ const useAPIHook = () => {
 
             const url = (apiURI ? apiURI : ((IS_DEV ? BASE_API_DEV : BASE_API_PROD) + endPath)) + (params ? `${'?' + params}` : '');
             // console.log("uri::", url);
+
             let res: any = await fetch(url, body ? raw : rawNoBody);
             // console.log(`res:::`, Platform.OS, "::", endPath, "::", await res?.text(), JSON.stringify(res, null, 5));
+
             if (res !== undefined && (res.status === 200 || res.status === 202)) resJSON = toText ? await res?.text() : await res?.json();
             else resJSON = toText ? await res?.text() : await res?.json();
-
             // console.log(`res:::`, Platform.OS, "::", endPath, "::", JSON.stringify(res, null, 5));
             // console.log(`resJSON:::`, Platform.OS, "::", endPath, "::", JSON.stringify(resJSON, null, 5));
 
@@ -77,13 +74,18 @@ const useAPIHook = () => {
             };
 
         } catch (err: any) {
-            _setCrashErrLog("apiCallingError", `endPath:${endPath} -- msg:${err?.message()}`);
             console.log(`Error:: ${Platform.OS} :: ${endPath} ::: `, err);
             return { code: 404, res: undefined, url: "", status: false, err: true, message: err?.message };
         }
     }
 
+    /** THIS IS FOR ABORT API CALL */
     function abortAPI() { try { abort(); } catch (e) { /* LOG(e, "ERROR :: abortAPI =>>"); */ } }
+
+    /**
+     * THIS IS FOR WHEN USER CALL ANY API IN SCR AND 
+     * HIT BACK BTN THEN API CALLING IS EMIDIATLY ABORT 
+     **/
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => { abortAPI(); return false; });
         return () => { abortAPI(); backHandler.remove(); }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { BottomTabStack } from 'utils'
-import { useIsLoginCallFn, useOpenNotification, useThemeX } from 'hooks'
+import {  useThemeX } from 'hooks'
 import { MomentsScr, MapScr, MessageScr, ProfileScr, SearchScr } from 'screens'
 import { Size } from 'functions'
 import CustomizeBottomTabBar from './CustomizeBottomTabBar'
@@ -10,15 +10,7 @@ const BottomTab = () => {
 
     const { font, col, str } = useThemeX();
     const isFocused = (is: boolean): string => is ? col.PRIMARY : col.WHITE;
-
-    /**
-     * this call when init application then set some required states 
-     * and calling some apis for **/
-    useIsLoginCallFn();
-
-    /** Firebase Push Notification */
-    useOpenNotification();
-
+    
     return (
         <BottomTabStack.Navigator
             tabBar={props => <CustomizeBottomTabBar {...props} />}

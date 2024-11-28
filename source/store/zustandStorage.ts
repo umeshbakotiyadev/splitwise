@@ -11,5 +11,4 @@ const zustandStorage: StateStorage/* : PersistStorage<IAppState> */ = {
     removeItem: (name: string) => storage.delete(name),
 };
 
-
 export default zustandStorage;
