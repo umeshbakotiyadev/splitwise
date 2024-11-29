@@ -1,17 +1,18 @@
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ButtonX, FriendsItem, MasterView, PressX, ScrLoader, TextX, ViewX } from 'components'
 import { useAPI, useThemeX } from 'hooks'
 import { getRandomImgFN, getRandomNumFN, LOG, makeFriendsListForLocalStoreFN } from 'functions'
 import { firendsListItemType, StackProps, ToastType } from 'Types'
 import useAppStore from 'store'
 import { bSpace } from 'utils'
+import { ADD_FRIENDS_IC } from 'assets'
 
 const FriendsListingController = ({ navigation, route }: StackProps<'FriendsListingScr'>) => {
 
     const { getFriendsListAPI } = useAPI();
-    const { setFriensListData, firendsList } = useAppStore();
-    const { col, cpSty, str, friListSty } = useThemeX();
+    const { setFriensListData, firendsList, userData } = useAppStore();
+    const { col, cpSty, str, friListSty, } = useThemeX();
 
     const [toast, setToast] = useState<ToastType>({});
     const [topLoading, setTopLoading] = useState<boolean>(false);
@@ -21,6 +22,10 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
 
     const flatListRef = useRef<FlatList<any>>(null);
     const hasNextPageRef = useRef<boolean>(true);
+
+    const firendsListArr = useMemo((): Array<firendsListItemType> => {
+        return Object.values(firendsList).filter((item) => userData?.email !== item?.email);
+    }, [firendsList, userData]);
 
     async function getFriendsList({ topRefresh = false, bottomRefresh = false }
         : { topRefresh?: boolean, bottomRefresh?: boolean; }) {
@@ -54,13 +59,12 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
         getFriendsList({ topRefresh: true });
     }, []);
 
-    // LOG(firendsList)
     return (
         <MasterView fixed hShow={false} >
             <FlatList
                 ref={flatListRef} refreshing
                 renderItem={renderItem}
-                data={Object.values(firendsList) || []}
+                data={firendsListArr}
                 contentContainerStyle={{ paddingVertical: bSpace }}
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={() => <ViewX h={bSpace / 2} />}
@@ -76,7 +80,7 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
                     getFriendsList({ topRefresh: false, bottomRefresh: true });
                 }}
                 ListFooterComponent={() => {
-                    return (bottomLoading && Object.entries(firendsList)?.length > 0) ? <ViewX pV={30} >
+                    return (bottomLoading && firendsListArr?.length > 0) ? <ViewX pV={30} >
                         <ScrLoader loading={bottomLoading} absolute={false} />
                     </ViewX> : null;
                 }}
@@ -87,11 +91,11 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
                     </ViewX>
                 }}
             />
-            <ButtonX
+            <PressX
                 onPress={() => navigation.navigate("AddFriendScr")}
-                text={str.ADD_FRIEND}
+                children={<ADD_FRIENDS_IC color={col.D_WHITE} />}
                 mSty={friListSty.addExpenseBtn_mSty}
-                tSty={friListSty.addExpenseBtn_tSty}
+                cSty={friListSty.addExpenseBtn_cSty}
             />
         </MasterView>
     )

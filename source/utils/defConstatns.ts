@@ -16,8 +16,8 @@ const _WIDTH = Dimensions.get('window').width;
 const kAvoidSty: kBehaviorType = Platform.OS === "ios" ? "padding" : undefined;
 const hLine = StyleSheet.hairlineWidth;
 const bSpace = Size(21);
-const BtnHeight = 50;
-const headerHeight = 68;
+const BtnHeight = 40;
+const headerHeight = 48;
 
 const TENNIS_PAL_SUPPORT_CHAT_ID = IS_DEV ? "661bc7adf37c8e6cb08f1f86" : "662b556d410a1518746bcd59";
 
@@ -28,10 +28,17 @@ const isIOS = Platform.OS === 'ios' ? true : false;
 const initialState: IAppStateType = {
     appName: "useStore@Dev",
     firendsList: {},
+    expenses:{},
+    isLogin: false,
+    userData: {
+        email: "",
+    },
 };
 
 const setInitialState: setIAppStateType = {
-    setFriensListData() { },
+    setFriensListData(by) { },
+    setUserData(by) { },
+    setExpense(by) {},
 }
 
 const appStoreObj: appStoreType = { ...initialState, ...setInitialState };

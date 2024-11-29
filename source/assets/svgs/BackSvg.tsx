@@ -8,21 +8,16 @@ interface P extends SvgProps {
 
 function BackSvg({ color, ...props }: P) {
     return (
-        <Svg
-            width={11}
-            height={21}
-            viewBox="0 0 11 21"
-            fill="none"
+            <Svg
+            height="35px"
+            viewBox="0 -960 960 960"
+            width="35px"
+            fill={color}
             {...props}
-        >
-            <Path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M.434 11.758l8.648 8.953c1.396.071 2.009-.602 1.907-1.982l-7.593-7.892 7.593-7.892c.102-1.38-.51-2.052-1.907-1.982L.434 9.95c-.579.637-.579 1.132 0 1.805v.002z"
-                fill={color ?? "#fff"}
-            />
-        </Svg>
+          >
+            <Path d="M561-240L320-481l241-241 43 43-198 198 198 198-43 43z" />
+          </Svg>
     )
 }
 
-export default BackSvg
+export default React.memo(BackSvg);

@@ -54,7 +54,7 @@ const HeaderXCompo = ({
                     {backBtn && (<PressXCompo
                         cSty={cpSty.headerBtn_cSty}
                         mSty={cpSty.headerBtn_mSty}
-                        children={<BACK_IC color={hBtnColor} />}
+                        children={<BACK_IC color={hBtnColor??col.HEADER_SVG} />}
                         onPress={bPress ? bPress : () => navigation.goBack()}
                     />)}{lSvg}</View>
                 <View style={[sty.textView, { marginLeft: lM, marginRight: rM, alignItems: alignText, }]} >

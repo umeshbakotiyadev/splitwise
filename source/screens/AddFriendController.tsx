@@ -1,4 +1,4 @@
-import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Keyboard, StyleSheet, TextInput, } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { ButtonX, MasterView, TextInputX } from 'components'
 import { useThemeX } from 'hooks'
@@ -23,6 +23,7 @@ const AddFriendController = ({ navigation, route }: StackProps<'AddFriendScr'>) 
         if (compressTextFN(name).length == 0) setToast({ show: true, msg: str.PLZ_ENTER_NAME });
         else if (compressTextFN(email).length == 0) setToast({ show: true, msg: str.PLZ_ENTER_EMAIL });
         else if (!isValid.EMAIL(compressTextFN(email))) setToast({ show: true, msg: str.PLZ_ENTER_VALID_EMAIL });
+        else if (firendsList[email]?.email) setToast({ show: true, msg: str.PLZ_ENTER_UNIQUE_EMAIL });
         else {
             setFriensListData({ [email]: { email, name, id: generateUniqueID(), pImg: getRandomImgFN() } });
             navigation.goBack();

@@ -66,7 +66,7 @@ const TextInputXCompo = ({
                                 text={(!text || text?.length === 0) ? phNm : text}
                                 tSty={{
                                     ...cpSty.inputSty1,
-                                    color: (!text || text?.length === 0) ? col.BLACK02 : cpSty.inputSty1?.color,
+                                    color: (!text || text?.length === 0) ? col.INPUT_TEXT_PH_COL : cpSty.inputSty1?.color,
                                     ...textSty,
                                 }}
                             />)
@@ -77,7 +77,7 @@ const TextInputXCompo = ({
                                         ref={reff}
                                         value={text}
                                         onChangeText={onChangeT}
-                                        placeholderTextColor={col.BLACK02}
+                                        placeholderTextColor={col.INPUT_TEXT_PH_COL}
                                         placeholder={phNm}
                                         allowFontScaling={false}
                                         blurOnSubmit={rKeyType === 'done' ? true : false}
@@ -113,7 +113,7 @@ const TextInputXCompo = ({
                                         ref={reff}
                                         value={text}
                                         onChangeText={onChangeT}
-                                        placeholderTextColor={col.BLACK02}
+                                        placeholderTextColor={col.INPUT_TEXT_PH_COL}
                                         placeholder={phNm}
                                         allowFontScaling={false}
                                         blurOnSubmit={rKeyType === 'done' ? true : false}
@@ -178,10 +178,10 @@ const styFN = ({ col, font }: defStyType) => StyleSheet.create({
     container: {
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: col.BLACK02,
+        borderColor: col.INPUT_TEXT_PH_COL,
         paddingHorizontal: 15,
         paddingVertical: 7,
-        backgroundColor: col.D_WHITE,
+        backgroundColor: col.INPUT_BG,
         // paddingTop: 10,
         marginBottom: 10,
         // flexDirection: 'column'

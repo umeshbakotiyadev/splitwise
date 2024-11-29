@@ -11,10 +11,12 @@ const FriendListingScrStyFN = ({ font, col, bottom }: defStyType) => StyleSheet.
         marginHorizontal: bSpace,
         position: 'absolute',
         bottom: 0,
-        right: 0
+        right: 0,
     },
-    addExpenseBtn_tSty: {
-        paddingHorizontal: bSpace / 2,
+    addExpenseBtn_cSty: {
+        padding: 8,
+        backgroundColor: col.PRIMARY,
+        borderRadius: 10
     },
 
 });

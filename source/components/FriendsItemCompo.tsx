@@ -8,18 +8,31 @@ import { Size } from 'functions'
 import PressXCompo from './XCompos/PressXCompo'
 import ImageXCompo from './XCompos/ImageXCompo'
 import { useNavigation } from '@react-navigation/native'
+import ViewXCompo from './XCompos/ViewXCompo'
 
 const FriendsItemCompo = (item: firendsListItemType) => {
-    const { email, id, name, pImg } = item
+
+    const { email, id, name, pImg } = item;
+
     const navigation: StackProps<'FriendsListingScr'>['navigation'] = useNavigation();
-    const { defStyObj } = useThemeX();
+    const { defStyObj, col } = useThemeX();
     const sty = styFN(defStyObj);
 
     return (<PressXCompo
         cSty={sty.mainSty}
         onPress={() => navigation.navigate("ExpenseListingScr", item)} >
-        <ImageXCompo source={pImg} style={sty.imgSty} resizeMode='stretch' />
-        <TextXCompo tSty={sty.nameSty} text={name} />
+        <ImageXCompo uri={pImg} style={sty.imgSty} resizeMode='cover' />
+        <ViewXCompo f={1} >
+            <TextXCompo tSty={sty.nameSty} lines={1} text={name} />
+        </ViewXCompo>
+        <ViewXCompo style={sty.seCSty} >
+            <TextXCompo
+                text={"owes you"} fColor={col.D_BLACK}
+                tSty={sty.statusTextSty} />
+            <TextXCompo
+                text={"US$150.00"} fColor={col.D_BLACK}
+                tSty={sty.moneyTextSty} />
+        </ViewXCompo>
     </PressXCompo>)
 }
 
@@ -31,23 +44,34 @@ const styFN = ({ col, font }: defStyType) => StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         height: 60,
-        backgroundColor: col.PRIMARY,
+        backgroundColor: col.FRI_LISTING_ITEM_BG,
         paddingHorizontal: bSpace,
         marginHorizontal: bSpace / 2,
         borderRadius: 20,
         alignItems: 'center'
     },
     nameSty: {
-        fontFamily: font.MEDIUM,
-        fontSize: Size(12),
-        paddingHorizontal: bSpace / 2,
-        color: col.D_WHITE,
+        fontFamily: font.REGULAR,
+        fontSize: Size(16),
+        paddingHorizontal: bSpace,
+        color: col.D_BLACK,
     },
     imgSty: {
         height: "70%",
         aspectRatio: 1,
-        backgroundColor: 'red',
+        backgroundColor: col.D_WHITE,
         borderRadius: 100,
+    },
+    seCSty: {
+        justifyContent: 'space-between',
+    },
+    statusTextSty: {
+        fontFamily: font.LIGHT,
+        fontSize: Size(10)
+    },
+    moneyTextSty: {
+        fontFamily: font.SEMI_BOLD,
+        fontSize: Size(12)
     }
 
 })

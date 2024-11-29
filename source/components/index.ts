@@ -13,8 +13,11 @@ import ImageX from "./XCompos/ImageXCompo";
 import ScrLoader from "./ScrLoaderCompo";
 import FriendsItem from "./FriendsItemCompo";
 import ExpenseListingItem from "./ExpenseListingItemCompo";
+import PaidByUserItem from "./PaidByUserItemCompo";
+import UnequallyAmountItem from "./UnequallyAmountItemCompo";
 
 export {
     PressX, MasterView, HeaderX, StatusBarX, TextX, TextInputX, ImageX, ViewX, ButtonX,
-    AlertBox, BottomSheetX, ScrLoader, FriendsItem, ExpenseListingItem
+    AlertBox, BottomSheetX, ScrLoader, FriendsItem, ExpenseListingItem,
+    PaidByUserItem, UnequallyAmountItem
 }

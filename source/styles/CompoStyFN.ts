@@ -23,9 +23,9 @@ const CompoStyFN = ({ font, col, bottom }: defStyType) => StyleSheet.create({
     },
 
     header_title_tSty: {
-        fontFamily: font.BOLD,
+        fontFamily: font.REGULAR,
         fontSize: Size(20),
-        color: col.D_WHITE
+        color: col.HEADER_TITLE
     },
 
     cpTitle: {

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { defStyType } from 'Types'
+import { defStyType, expenseSharingType } from 'Types'
 import { useThemeX } from 'hooks'
 import { bSpace } from 'utils'
 import ImageXCompo from './XCompos/ImageXCompo'
@@ -9,7 +9,7 @@ import ViewXCompo from './XCompos/ViewXCompo'
 import TextXCompo from './XCompos/TextXCompo'
 import { Size } from 'functions'
 
-const ExpenseListingItemCompo = () => {
+const ExpenseListingItemCompo = ({ description, expenseSharingUsers, id, isGroup, payBy, splitType }: expenseSharingType) => {
 
     const { defStyObj, col, font } = useThemeX();
     const sty = styFN(defStyObj);
@@ -18,7 +18,7 @@ const ExpenseListingItemCompo = () => {
         <View style={sty.mainSty} >
             <ImageXCompo source={TICKET_IMG} style={sty.ticketImgSty} resizeMode='cover' />
             <ViewXCompo pH={bSpace / 2} f={1} >
-                <TextXCompo text={"hi"} tSty={sty.discriptioinNameSty} />
+                <TextXCompo text={description} tSty={sty.discriptioinNameSty} />
                 <TextXCompo text={"transaction"} tSty={sty.transactionStatusSty} />
             </ViewXCompo>
             <ViewXCompo pH={bSpace / 2} aItem='flex-end'>
@@ -37,7 +37,7 @@ const styFN = ({ col, font }: defStyType) => StyleSheet.create({
         flexDirection: 'row',
         height: 100,
         flex: 1,
-        backgroundColor: col.SECONDARY,
+        backgroundColor: col.EXPENSE_LISTING_ITEM_BG,
         marginHorizontal: bSpace / 2,
         borderRadius: 30,
         overflow: 'hidden',
@@ -51,22 +51,22 @@ const styFN = ({ col, font }: defStyType) => StyleSheet.create({
         borderRadius: 1000
     },
     discriptioinNameSty: {
-        color: col.D_WHITE,
+        color: col.D_BLACK,
         fontFamily: font.BOLD,
         fontSize: Size(16),
     },
     transactionStatusSty: {
-        color: col.D_WHITE,
+        color: col.D_BLACK,
         fontFamily: font.REGULAR,
         fontSize: Size(12),
     },
     moneySty: {
-        color: col.D_WHITE,
+        color: col.D_BLACK,
         fontFamily: font.BOLD,
         fontSize: Size(18),
     },
     statusSty: {
-        color: col.D_WHITE,
+        color: col.D_BLACK,
         fontFamily: font.BOLD,
         fontSize: Size(16),
         // backgroundColor:'red',

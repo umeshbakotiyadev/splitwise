@@ -1,7 +1,8 @@
+import AddExpenseScr from "./AddExpenseController"
 import AddFriendScr from "./AddFriendController"
 import ExpenseListingScr from "./ExpenseListingController"
 import FriendsListingScr from "./FriendsListingController"
 
 export {
-    FriendsListingScr, AddFriendScr, ExpenseListingScr
+    FriendsListingScr, AddFriendScr, ExpenseListingScr, AddExpenseScr
 }

@@ -32,7 +32,7 @@ type AppStackParamListType = {
     FriendsListingScr: any;
     AddFriendScr: any;
     ExpenseListingScr: firendsListItemType;
-    AddExpenseScr: any;
+    AddExpenseScr: firendsListItemType;
 };
 
 type StackProps<RouteName extends keyof AppStackParamListType> = (
@@ -294,7 +294,7 @@ type BottomSheetXType = {
     bgSty?: ViewStyle;
     mSty?: ViewStyle;
     children?: ReactNode | JSX.Element;
-    snapPoints: (string | number)[] | SharedValue<(string | number)[]> | Readonly<(string | number)[] | SharedValue<(string | number)[]>> | undefined
+    snapPoints: Array<string | number> | SharedValue<Array<string | number>>;
     enablePanDownToClose?: boolean;
     modal?: boolean;
     handleComponent?: React.FC<BottomSheetHandleProps> | null | undefined;
@@ -350,11 +350,18 @@ type ToastType = {
 
 type IAppStateType = {
     appName: string;
+    isLogin: boolean;
+    userData: userData;
     firendsList: firendsListOBJType;
+    expenses: expenseSharingOBJType;
 }
 
 type setIAppStateType = {
-    setFriensListData: (userData: firendsListOBJType) => void;
+    setFriensListData: (by: firendsListOBJType) => void;
+    setResetFriensListData: (by: firendsListOBJType) => void;
+    setUserData: (by: userData) => void;
+    setExpense: (by: expenseSharingOBJType) => void;
+    setResetExpenses: (by: expenseSharingOBJType) => void;
 }
 
 type appStoreType = IAppStateType & setIAppStateType;
@@ -368,10 +375,36 @@ type firendsListItemType = {
     pImg?: any;
 }
 
+type userData = {
+    email?: string;
+};
+
+type expenseSharingUsersType = {
+    amount?: number;
+    email?: string;
+}
+
+type expenseSharingUsersOBJType = { [key: string]: expenseSharingUsersType }
+
+type expenseSharingType = {
+    id?:string;
+    description?: string;
+    payBy?: string;
+    splitType?: splitType,
+    isGroup?:boolean;
+    expenseSharingUsers?: expenseSharingUsersOBJType;
+}
+
+type expenseSharingOBJType = { [key: string]: expenseSharingType };
+
+type splitType = "equally" | "unequally";
+
 export type {
     StackProps, AppStackParamListType, appStoreType,
     kBehaviorType, HeaderType, PressXType, ViewPfType, TextXType, MasterViewType,
     StatusBarType, IAppStateType, defStyType, ViewXType, AlertType, TextInputXType,
     ApiCallType, ApiResType, ToastType, colorType, BottomSheetXType, setIAppStateType,
-    firendsListOBJType, firendsListItemType
+    firendsListOBJType, firendsListItemType, expenseSharingUsersType, expenseSharingType,
+    splitType, expenseSharingUsersOBJType, expenseSharingOBJType
+
 }

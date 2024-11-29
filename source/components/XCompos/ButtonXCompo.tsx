@@ -23,12 +23,12 @@ const ButtonXCompo = (porps: PressXType & { transparent?: boolean }) => {
         {...porps}
         tSty={{
             color: transparent ? col.WHITE : col.WHITE,
-            fontFamily: font.BOLD,
+            fontFamily: font.MEDIUM,
             textTransform: 'uppercase',
             fontSize: Size(20),
             ...porps?.tSty
         }}
-        cSty={{ borderWidth: 1 }}
+        cSty={{ borderWidth: 1, ...porps?.cSty }}
         // mSty={{ height: 56, ...porps?.mSty }}
         mSty={{ height: porps?.h || BtnHeight, ...porps?.mSty }}
     />)
