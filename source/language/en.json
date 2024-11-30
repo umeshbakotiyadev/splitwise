@@ -25,7 +25,7 @@
     "INDIAN_MOENY_SIGN": "₹",
     "YOU_BORROWED": "you borrowed",
     "NO_BLANCE": "no balance",
-    "YOU_LET": "you let",
+    "YOU_LET": "you lent",
     "PAID": "paid",
     "EDIT_EXPENSE": "Edit Expense",
     "LOGIN": "Login",
@@ -36,5 +36,6 @@
     "ENTER_GROUP_NAME": "Enter Group Name",
     "PLZ_ENTER_GROUP_NAME": "Please Enter Group Name!",
     "LOGOUT": "Logout",
-    "SELECT_AT_LIST_ONE_FRIENDS":"Select at list one friend!"
+    "SELECT_AT_LIST_ONE_FRIENDS":"Select at list one friend!",
+    "YOU_CANNOT":"You can not add and expense that does not involve yourself, unless that expense in a group."
 }

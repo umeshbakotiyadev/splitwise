@@ -48,7 +48,7 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
             let checkEnteredAmount = 0;
             for (const item in unequallyExpenseOBJ) {
                 checkEnteredAmount = checkEnteredAmount + (unequallyExpenseOBJ[item]?.amount || 0);
-                if (amountNUM === unequallyExpenseOBJ[item]?.amount) payBy = item;
+                // if (amountNUM === unequallyExpenseOBJ[item]?.amount) payBy = item;
             }
             if (checkEnteredAmount > amountNUM) { setToast({ show: true, msg: str.THE_PER_PERSON_AMOUNTS_DONT_ADD_UP_TO_THE_TOTAL_AMOUNT + ` (${str.INDIAN_MOENY_SIGN + amountNUM}). ` + str.YOU_ARE_OVER_BY + ` ${str.INDIAN_MOENY_SIGN + (checkEnteredAmount - amountNUM)}.` }); return; }
             if (checkEnteredAmount < amountNUM) { setToast({ show: true, msg: str.THE_PER_PERSON_AMOUNTS_DONT_ADD_UP_TO_THE_TOTAL_AMOUNT + ` (${str.INDIAN_MOENY_SIGN + amountNUM}). ` + str.YOU_ARE_UNDER_BY + ` ${str.INDIAN_MOENY_SIGN + (amountNUM - checkEnteredAmount)}.` }); return; }
@@ -62,8 +62,12 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
             for (const item in friendsOBJs) expenseSharingUsers[item] = { email: item, amount: amountNUM / (firiendsARR?.length) };
             expenseOBJ = { id: uniqueID, description, payBy, splitType, isGroup, expenseSharingUsers, totalAmount: amountNUM };
         } else {
-            const uneExpenseOBJ = unequallyExpenseOBJ;
-            // for (const item in uneExpenseOBJ) { if (uneExpenseOBJ[item]?.amount === amountNUM) payBy = uneExpenseOBJ[item]?.email ?? "**"; };
+            let totalAMOUNTEmail: undefined | string = undefined;
+            for (const item in unequallyExpenseOBJ) {
+                if (item && unequallyExpenseOBJ[item]?.amount == amountNUM) totalAMOUNTEmail = unequallyExpenseOBJ[item]?.email;
+            };
+            if (totalAMOUNTEmail == userData?.email && totalAMOUNTEmail == payBy) { return navigation?.goBack(); }
+            else if (totalAMOUNTEmail == payBy) { return setToast({ show: true, msg: str.YOU_CANNOT }); }
             expenseOBJ = { id: uniqueID, description, payBy, splitType, isGroup, expenseSharingUsers: unequallyExpenseOBJ, totalAmount: amountNUM };
         }
         setExpense({ [uniqueID]: { ...expenseOBJ } });
