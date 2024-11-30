@@ -12,26 +12,30 @@ import BottomSheet from '@gorhom/bottom-sheet';
 
 const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>) => {
 
-    const isGroup: boolean = false;
+    const { isGroup = false, friends = {}, isEdit = false, expItem = {} } = route?.params ?? {};
 
     const { str, col, addExpenseSty } = useThemeX();
     const { firendsList, userData, setExpense, expenses } = useAppStore();
 
     const [toast, setToast] = useState<ToastType>({});
-    const [description, setDescription] = useState<string>("");
-    const [amount, setAmount] = useState<string>('');
-    const [splitType, setSplitType] = useState<"equally" | "unequally">('equally');
-    const [payUser, setPayUser] = useState<firendsListItemType | null>(userData?.email ? firendsList[userData?.email] : null);
+    const [description, setDescription] = useState<string>(expItem?.description || "");
+    const [amount, setAmount] = useState<string>(expItem?.totalAmount?.toString() || '');
+    const [splitType, setSplitType] = useState<"equally" | "unequally">(expItem?.splitType || 'equally');
+    const [payUser, setPayUser] = useState<firendsListItemType | null | undefined>(userData?.email ? firendsList[userData?.email] : null);
     const [unequallyExpenseOBJ, setUnequallyExpenseOBJ] = useState<expenseSharingUsersOBJType>({});
 
     const bottomSheetRef = useRef<BottomSheet>(null);
     const descriptionlRef = useRef<TextInput>(null);
-    const loginUser = useMemo(() => firendsList[userData?.email ?? ""] ?? {}, [userData, firendsList]);
 
     const friendsOBJs = useMemo(() => {
-        if (!isGroup) return ({ [route?.params?.email ?? "--"]: route?.params, [loginUser?.email ?? "**"]: loginUser })
-        return {};
-    }, [firendsList, route, loginUser]);
+        return getAvailableFRIs();
+    }, [firendsList]);
+
+    function getAvailableFRIs(): firendsListOBJType {
+        let obj: firendsListOBJType = {};
+        for (const key in (friends ?? {})) obj[key] = firendsList[key];
+        return obj;
+    }
 
     function addExpenseFN() {
         Keyboard.dismiss();
@@ -51,16 +55,18 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
         }
 
         let expenseOBJ: expenseSharingType = {};
-        const firiendsARR = Object.values(firendsList);
-        const uniqueID = generateUniqueID();
+        const firiendsARR = Object.values(friendsOBJs);
+        const uniqueID = (isEdit && expItem?.id) ? expItem?.id : generateUniqueID();
         if (splitType == 'equally') {
             let expenseSharingUsers: expenseSharingUsersOBJType = {};
-            for (const item in friendsOBJs) expenseSharingUsers = { ...expenseSharingUsers, [item]: { email: item, amount: amountNUM / (firiendsARR?.length) } }
-            expenseOBJ = { id: uniqueID, description, payBy, splitType, isGroup, expenseSharingUsers, };
+            for (const item in friendsOBJs) expenseSharingUsers[item] = { email: item, amount: amountNUM / (firiendsARR?.length) };
+            expenseOBJ = { id: uniqueID, description, payBy, splitType, isGroup, expenseSharingUsers, totalAmount: amountNUM };
         } else {
-            expenseOBJ = { id: uniqueID, description, payBy, splitType, isGroup, expenseSharingUsers: unequallyExpenseOBJ };
+            const uneExpenseOBJ = unequallyExpenseOBJ;
+            // for (const item in uneExpenseOBJ) { if (uneExpenseOBJ[item]?.amount === amountNUM) payBy = uneExpenseOBJ[item]?.email ?? "**"; };
+            expenseOBJ = { id: uniqueID, description, payBy, splitType, isGroup, expenseSharingUsers: unequallyExpenseOBJ, totalAmount: amountNUM };
         }
-        setExpense({ [uniqueID]: expenseOBJ });
+        setExpense({ [uniqueID]: { ...expenseOBJ } });
         navigation?.goBack();
     }
 
@@ -68,7 +74,7 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
         return <UnequallyAmountItem
             key={index.toString()}
             amount={item?.amount}
-            name={firendsList[item?.email ?? ""]?.name}
+            name={firendsList[item?.email ?? ""]?.name + `${userData?.email == item?.email ? (' (' + str.YOU + ')') : ""}`}
             pImg={firendsList[item?.email ?? ""]?.pImg}
             onChangeT={t => { setUnequallyExpenseOBJ({ ...unequallyExpenseOBJ, [item?.email ?? ""]: { ...item, amount: t } }) }}
         />
@@ -77,24 +83,24 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
     const padidByRenderItem = useCallback(({ index, item }: { item: firendsListItemType, index: number }) => {
         return (<PaidByUserItem
             {...item}
-            isPaidBy={item?.email == payUser?.email}
+            isSelected={item?.email == payUser?.email}
             name={item?.name + `${(userData?.email == item?.email) ? (" (" + str?.YOU) + ")" : ""}`}
             onPress={() => { setPayUser(item); bottomSheetRef?.current?.close(); }}
         />)
     }, [bottomSheetRef, friendsOBJs, payUser]);
 
     useEffect(() => {
-        let OBJ: firendsListOBJType = {};
-        if (!isGroup) {
-            OBJ = { [route?.params?.email ?? "--"]: route?.params, [loginUser?.email ?? "**"]: loginUser };
-        } else { }
-
-        let unequallyOBJ: any = {};
-        for (let keys in OBJ) unequallyOBJ[keys] = { "email": OBJ[keys]?.email, "amount": 0 };
-        setUnequallyExpenseOBJ(unequallyOBJ);
+        if (isEdit) {
+            if (expItem?.payBy) setPayUser(firendsList[expItem?.payBy]);
+            if (expItem?.expenseSharingUsers) setUnequallyExpenseOBJ(expItem?.expenseSharingUsers);
+        } else {
+            let unequallyOBJ: any = {};
+            for (let keys in getAvailableFRIs()) unequallyOBJ[keys] = { "email": keys, "amount": 0 };
+            setUnequallyExpenseOBJ(unequallyOBJ);
+        }
     }, []);
 
-    return (<MasterView title={str.ADD_EXPENCE} p={bSpace}
+    return (<MasterView title={isEdit ? str.EDIT_EXPENSE : str.ADD_EXPENCE} p={bSpace}
         toast={toast} setToast={setToast}
         bSvg={
             <ViewX pH={bSpace} pV={bSpace / 2} >
@@ -104,7 +110,7 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
         modals={
             <BottomSheetX snapPoints={["50%", "80%"]} bRef={bottomSheetRef} >
                 <BSFlatList
-                    data={Object.values(friendsOBJs)}
+                    data={Object.values(friendsOBJs).reverse()}
                     renderItem={padidByRenderItem}
                     ItemSeparatorComponent={() => <ViewX h={5} />}
                     keyExtractor={(item, index) => index.toString()} />
@@ -146,7 +152,23 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
             rKeyType='done'
             inputSty={{ textAlign: 'center', }}
             style={{ borderColor: undefined }}
+            maxLength={8}
         />
+
+        <ViewX style={addExpenseSty.padinByMSty} >
+            <TextX text={str.PAID_BY} tSty={addExpenseSty.paidBy_tSty} />
+            <PressX
+                onPress={() => { bottomSheetRef?.current?.expand() }}
+                cSty={addExpenseSty.selPayBy_cSty}
+                mSty={addExpenseSty.selPayBy_mSty}>
+                <ImageX
+                    uri={payUser?.pImg}
+                    style={addExpenseSty.paidByUserImgSty} />
+                <TextX
+                    text={payUser?.name}
+                    tSty={addExpenseSty.selPayBy_tSty} />
+            </PressX>
+        </ViewX>
 
         {/* EQUALITY AND UNEQUALITY */}
         <ViewX style={addExpenseSty.mainC1} >
@@ -171,20 +193,7 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
 
         {/* SELECT EXPENSE SHARING USER WITH EQUALITY */}
         {(splitType == 'equally')
-            ? (<ViewX entering={FadeInDown} style={addExpenseSty.padinByMSty} >
-                <TextX text={str.PAID_BY} tSty={addExpenseSty.paidBy_tSty} />
-                <PressX
-                    onPress={() => { bottomSheetRef?.current?.expand() }}
-                    cSty={addExpenseSty.selPayBy_cSty}
-                    mSty={addExpenseSty.selPayBy_mSty}>
-                    <ImageX
-                        uri={payUser?.pImg}
-                        style={addExpenseSty.paidByUserImgSty} />
-                    <TextX
-                        text={payUser?.name}
-                        tSty={addExpenseSty.selPayBy_tSty} />
-                </PressX>
-            </ViewX>)
+            ? (<></>)
             : (<ViewX mV={bSpace / 2} >
                 {Object.values(unequallyExpenseOBJ).map(unequallyAmountRenderItem)}
             </ViewX>)

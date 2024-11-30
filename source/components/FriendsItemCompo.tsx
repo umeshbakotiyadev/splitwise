@@ -9,10 +9,11 @@ import PressXCompo from './XCompos/PressXCompo'
 import ImageXCompo from './XCompos/ImageXCompo'
 import { useNavigation } from '@react-navigation/native'
 import ViewXCompo from './XCompos/ViewXCompo'
+import useAppStore from 'store'
 
-const FriendsItemCompo = (item: firendsListItemType) => {
+const FriendsItemCompo = (item: firendsListItemType & { onPress: () => void }) => {
 
-    const { email, id, name, pImg } = item;
+    const { email, id, name, pImg, onPress } = item;
 
     const navigation: StackProps<'FriendsListingScr'>['navigation'] = useNavigation();
     const { defStyObj, col } = useThemeX();
@@ -20,19 +21,19 @@ const FriendsItemCompo = (item: firendsListItemType) => {
 
     return (<PressXCompo
         cSty={sty.mainSty}
-        onPress={() => navigation.navigate("ExpenseListingScr", item)} >
+        onPress={onPress} >
         <ImageXCompo uri={pImg} style={sty.imgSty} resizeMode='cover' />
         <ViewXCompo f={1} >
             <TextXCompo tSty={sty.nameSty} lines={1} text={name} />
         </ViewXCompo>
-        <ViewXCompo style={sty.seCSty} >
+        {/* <ViewXCompo style={sty.seCSty} >
             <TextXCompo
                 text={"owes you"} fColor={col.D_BLACK}
                 tSty={sty.statusTextSty} />
             <TextXCompo
                 text={"US$150.00"} fColor={col.D_BLACK}
                 tSty={sty.moneyTextSty} />
-        </ViewXCompo>
+        </ViewXCompo> */}
     </PressXCompo>)
 }
 

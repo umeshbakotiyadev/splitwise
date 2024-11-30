@@ -19,4 +19,6 @@
     "OP_ITEM_BG": "#D6BD98",
     "BOTTOMSHEET_BG": "#EEEDEB",
     "UNEQUALLY_ITEM_BG":"#EEEDEB",
+    "GREEN":"green",
+    "BOOTOM_TAB_BG":"#222222"
 }

@@ -31,8 +31,13 @@ type kBehaviorType = 'height' | 'position' | 'padding' | undefined;
 type AppStackParamListType = {
     FriendsListingScr: any;
     AddFriendScr: any;
-    ExpenseListingScr: firendsListItemType;
-    AddExpenseScr: firendsListItemType;
+    ExpenseListingScr: { friends: firendsListOBJType; isGroup?: boolean; scrName?: string };
+    AddExpenseScr: { friends: firendsListItemType; isGroup?: boolean; isEdit?: boolean; expItem?: expenseSharingType; };
+    LoginScr: any;
+    RegisterUserScr: any;
+    MakeGroupScr: any;
+    GorupListingScr: any;
+    ProfileScr: any;
 };
 
 type StackProps<RouteName extends keyof AppStackParamListType> = (
@@ -354,6 +359,7 @@ type IAppStateType = {
     userData: userData;
     firendsList: firendsListOBJType;
     expenses: expenseSharingOBJType;
+    groupList: groupItemOBJType;
 }
 
 type setIAppStateType = {
@@ -362,6 +368,9 @@ type setIAppStateType = {
     setUserData: (by: userData) => void;
     setExpense: (by: expenseSharingOBJType) => void;
     setResetExpenses: (by: expenseSharingOBJType) => void;
+    setLogin: (by: boolean) => void;
+    setGroupList: (by: groupItemOBJType) => void;
+    setResetGroupList: (by: groupItemOBJType) => void;
 }
 
 type appStoreType = IAppStateType & setIAppStateType;
@@ -375,9 +384,7 @@ type firendsListItemType = {
     pImg?: any;
 }
 
-type userData = {
-    email?: string;
-};
+type userData = firendsListItemType;
 
 type expenseSharingUsersType = {
     amount?: number;
@@ -387,17 +394,28 @@ type expenseSharingUsersType = {
 type expenseSharingUsersOBJType = { [key: string]: expenseSharingUsersType }
 
 type expenseSharingType = {
-    id?:string;
+    id?: string;
+    totalAmount?: number;
     description?: string;
     payBy?: string;
     splitType?: splitType,
-    isGroup?:boolean;
+    isGroup?: boolean;
     expenseSharingUsers?: expenseSharingUsersOBJType;
 }
 
+type splitType = "equally" | "unequally";
+
 type expenseSharingOBJType = { [key: string]: expenseSharingType };
 
-type splitType = "equally" | "unequally";
+type groupItemType = {
+    id?: string;
+    gImg?:string;
+    groupName?: string;
+    groupFriends: firendsListOBJType;
+}
+
+type groupItemOBJType = { [key: string]: groupItemType };
+
 
 export type {
     StackProps, AppStackParamListType, appStoreType,
@@ -405,6 +423,7 @@ export type {
     StatusBarType, IAppStateType, defStyType, ViewXType, AlertType, TextInputXType,
     ApiCallType, ApiResType, ToastType, colorType, BottomSheetXType, setIAppStateType,
     firendsListOBJType, firendsListItemType, expenseSharingUsersType, expenseSharingType,
-    splitType, expenseSharingUsersOBJType, expenseSharingOBJType
+    splitType, expenseSharingUsersOBJType, expenseSharingOBJType, groupItemOBJType,
+    groupItemType
 
 }

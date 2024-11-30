@@ -15,9 +15,12 @@ const useAppStore = create<appStoreType>()(
             firendsList: { ...state?.firendsList, ...by }
         })),
         setResetFriensListData: by => set({ firendsList: by }),
-        setUserData: by => set({ userData: by, isLogin: true }),
+        setUserData: by => set({ userData: by }),
         setExpense: (by) => set((state) => ({ expenses: { ...state?.expenses, ...by } })),
-        setResetExpenses: (by) => set({ expenses: by })
+        setResetExpenses: (by) => set({ expenses: by }),
+        setLogin: (by) => set({ isLogin: by }),
+        setGroupList: (by) => set((state) => ({ groupList: { ...state?.groupList, ...by } })),
+        setResetGroupList: (by) => set({ groupList: by }),
     }), {
         "name": '@SplitWiseApp',
         "storage": createJSONStorage(() => zustandStorage),

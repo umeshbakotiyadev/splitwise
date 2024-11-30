@@ -28,17 +28,23 @@ const isIOS = Platform.OS === 'ios' ? true : false;
 const initialState: IAppStateType = {
     appName: "useStore@Dev",
     firendsList: {},
-    expenses:{},
+    expenses: {},
     isLogin: false,
     userData: {
         email: "",
     },
+    groupList:{},
 };
 
 const setInitialState: setIAppStateType = {
     setFriensListData(by) { },
     setUserData(by) { },
-    setExpense(by) {},
+    setExpense(by) { },
+    setResetExpenses(by) { },
+    setResetFriensListData(by) { },
+    setLogin(by) { },
+    setGroupList(by) { },
+    setResetGroupList(by) { },
 }
 
 const appStoreObj: appStoreType = { ...initialState, ...setInitialState };

@@ -8,14 +8,14 @@ import TextXCompo from './XCompos/TextXCompo'
 import { Size } from 'functions'
 import { bSpace } from 'utils'
 
-const PaidByUserItemCompo = ({ email, id, name, pImg, isPaidBy, onPress }
-    : firendsListItemType & { isPaidBy: boolean, onPress: () => void }) => {
+const PaidByUserItemCompo = ({ email, id, name, pImg, isSelected, onPress }
+    : firendsListItemType & { isSelected: boolean, onPress: () => void }) => {
 
     const { defStyObj, str } = useThemeX();
     const sty = styFN(defStyObj);
 
     return (
-        <PressXCompo onPress={onPress} cSty={sty.cSty} bWidth={isPaidBy ? 3 : undefined} >
+        <PressXCompo onPress={onPress} cSty={sty.cSty} bWidth={isSelected ? 3 : undefined} >
             <ImageXCompo uri={pImg} style={sty.pImgSty} />
             <TextXCompo text={name} tSty={sty.name_tSty} />
         </PressXCompo>

@@ -153,6 +153,8 @@ const getRandomImgFN = (): any => ([
     "https://i.pinimg.com/474x/c4/72/cd/c472cd63702d173be649da423f2c0262.jpg",
     "https://i.pinimg.com/474x/9a/e1/3a/9ae13a3d8caa2653486ce6af2f835d3a.jpg"])[getRandomNumFN(11)];
 
+    
+
 export {
     isUrl, Size, deepClone, isValid, defStyFN, _WIDTH, _HEIGHT, isErr,
     generateUniqueID, toNum, cardShadow, toJSON, compressTextFN, LOG,

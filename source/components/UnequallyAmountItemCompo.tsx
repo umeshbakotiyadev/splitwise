@@ -24,7 +24,7 @@ const UnequallyAmountItemCompo = ({ pImg, name, amount, onChangeT }: { pImg?: st
                 text={String(amount ?? 0)}
                 onChangeT={t => onChangeT(parseInt(t || '0'))}
                 kbType='numeric'
-                rKeyType='done' w={100}
+            rKeyType='done' w={100}
                 style={{ borderWidth: undefined, marginBottom: 0 }}
                 inputSty={{ textAlign: 'center', }}
             />

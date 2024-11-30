@@ -11,7 +11,7 @@ import { ADD_FRIENDS_IC } from 'assets'
 const FriendsListingController = ({ navigation, route }: StackProps<'FriendsListingScr'>) => {
 
     const { getFriendsListAPI } = useAPI();
-    const { setFriensListData, firendsList, userData } = useAppStore();
+    const { firendsList, userData } = useAppStore();
     const { col, cpSty, str, friListSty, } = useThemeX();
 
     const [toast, setToast] = useState<ToastType>({});
@@ -24,7 +24,7 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
     const hasNextPageRef = useRef<boolean>(true);
 
     const firendsListArr = useMemo((): Array<firendsListItemType> => {
-        return Object.values(firendsList).filter((item) => userData?.email !== item?.email);
+        return Object.values(firendsList).filter((item) => userData?.email !== item?.email).reverse();
     }, [firendsList, userData]);
 
     async function getFriendsList({ topRefresh = false, bottomRefresh = false }
@@ -38,12 +38,12 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
         if (!hasNextPageRef.current) return;
 
         getFriendsListAPI().then(({ res }) => {
-            // LOG(res)
             hasNextPageRef.current = !!(res?.next);
             if (Array.isArray(res?.data)) {
                 const data = res?.data;
                 LOG(makeFriendsListForLocalStoreFN(data))
-                setFriensListData(makeFriendsListForLocalStoreFN(data));
+                /** TEMPORARY COMMENTED **/
+                // setFriensListData(makeFriendsListForLocalStoreFN(data));
             }
             setBottomLoading(false); setTopLoading(false); setScrLoading(false);
         }).finally(() => {
@@ -51,9 +51,16 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
         });
     }
 
+    function gotoExpneseScrFN(item: firendsListItemType) {
+        navigation.navigate("ExpenseListingScr", {
+            isGroup: false, scrName: item?.name,
+            friends: { [item?.email ?? ""]: item, [userData?.email ?? ""]: firendsList[item?.email ?? ""] },
+        });
+    }
+
     const renderItem = useCallback(({ item, index }: { item: firendsListItemType, index: number }) => {
-        return (<FriendsItem {...item} />)
-    }, [firendsList]);
+        return (<FriendsItem {...item} onPress={() => gotoExpneseScrFN(item)} />);
+    }, [firendsList, gotoExpneseScrFN]);
 
     useEffect(() => {
         getFriendsList({ topRefresh: true });
@@ -76,7 +83,7 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
                     }}
                 />}
                 onEndReached={() => {
-                    if (!hasNextPageRef.current || bottomLoading || topLoading) return;
+                    if (!hasNextPageRef.current || bottomLoading || topLoading || firendsListArr?.length < 10) return;
                     getFriendsList({ topRefresh: false, bottomRefresh: true });
                 }}
                 ListFooterComponent={() => {
@@ -95,8 +102,7 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
                 onPress={() => navigation.navigate("AddFriendScr")}
                 children={<ADD_FRIENDS_IC color={col.D_WHITE} />}
                 mSty={friListSty.addExpenseBtn_mSty}
-                cSty={friListSty.addExpenseBtn_cSty}
-            />
+                cSty={friListSty.addExpenseBtn_cSty} />
         </MasterView>
     )
 }

@@ -109,7 +109,7 @@ const CompoStyFN = ({ font, col, bottom }: defStyType) => StyleSheet.create({
     emptyListMSG_tSty: {
         fontFamily: font.REGULAR,
         fontSize: Size(14),
-        color: col.BLACK,
+        color: col.D_BLACK,
         textAlign: 'center',
     },
 
