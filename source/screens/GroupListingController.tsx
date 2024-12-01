@@ -1,14 +1,13 @@
 import React, { useCallback, useMemo, useRef } from 'react'
 import { FriendsItem, MasterView, PressX, TextX, ViewX } from 'components'
 import { ADD_FRIENDS_IC } from 'assets'
-import { firendsListItemType, groupItemOBJType, groupItemType, StackProps } from 'Types'
+import { groupItemOBJType, groupItemType, StackProps } from 'Types'
 import { useThemeX } from 'hooks'
 import useAppStore from 'store'
-import { FlatList, RefreshControl } from 'react-native'
+import { FlatList } from 'react-native'
 import { bSpace } from 'utils'
-import { LOG } from 'functions'
 
-const GroupListingController = ({ navigation, route }: StackProps<'GorupListingScr'>) => {
+const GroupListingController = ({ navigation, route }: StackProps<'GroupListingScr'>) => {
 
     const { col, font, str, friListSty, cpSty } = useThemeX();
     const { groupList, userData } = useAppStore();
@@ -31,7 +30,12 @@ const GroupListingController = ({ navigation, route }: StackProps<'GorupListingS
     }
 
     const renderItem = useCallback(({ item, index }: { item: groupItemType, index: number }) => {
-        return (<FriendsItem {...item} pImg={item?.gImg} name={item?.groupName} onPress={() => gotoExpneseScrFN(item)} />);
+        return (<FriendsItem
+            {...item} isGroup
+            pImg={item?.gImg}
+            name={item?.groupName}
+            onPress={() => gotoExpneseScrFN(item)}
+        />);
     }, [groupList, firendsListArr]);
 
     return (
@@ -40,7 +44,7 @@ const GroupListingController = ({ navigation, route }: StackProps<'GorupListingS
                 ref={flatListRef} refreshing
                 renderItem={renderItem}
                 data={firendsListArr}
-                contentContainerStyle={{ paddingVertical: bSpace }}
+                contentContainerStyle={{ paddingVertical: bSpace, paddingBottom: 70 }}
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={() => <ViewX h={bSpace / 2} />}
                 ListEmptyComponent={() => {

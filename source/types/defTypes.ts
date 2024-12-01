@@ -36,8 +36,10 @@ type AppStackParamListType = {
     LoginScr: any;
     RegisterUserScr: any;
     MakeGroupScr: any;
-    GorupListingScr: any;
+    GroupListingScr: any;
     ProfileScr: any;
+    BottomTab: any;
+    ExpenseDetailsScr: { isGroup: boolean; expenseItem: expenseSharingType };
 };
 
 type StackProps<RouteName extends keyof AppStackParamListType> = (
@@ -409,7 +411,7 @@ type expenseSharingOBJType = { [key: string]: expenseSharingType };
 
 type groupItemType = {
     id?: string;
-    gImg?:string;
+    gImg?: string;
     groupName?: string;
     groupFriends: firendsListOBJType;
 }

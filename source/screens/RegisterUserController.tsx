@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Keyboard } from 'react-native'
+import { StyleSheet, Keyboard } from 'react-native'
 import React, { useRef, useState } from 'react'
-import { ButtonX, MasterView, PressX, TextInputX, ViewX } from 'components'
+import { ButtonX, MasterView, TextInputX, } from 'components'
 import { useThemeX } from 'hooks'
 import { defStyType, StackProps, ToastType } from 'Types'
 import useAppStore from 'store'
@@ -8,11 +8,10 @@ import { compressTextFN, generateUniqueID, getRandomImgFN, isValid } from 'funct
 import { TextInput } from 'react-native-gesture-handler'
 import { bSpace } from 'utils'
 
-const RegisterUserController = ({ navigation, route }: StackProps<'LoginScr'>) => {
+const RegisterUserController = ({ navigation, route }: StackProps<'RegisterUserScr'>) => {
 
-    const { setUserData, firendsList, setLogin, setFriensListData } = useAppStore();
-    const { str, defStyObj } = useThemeX();
-    const sty = styFN(defStyObj);
+    const { firendsList, setFriensListData } = useAppStore();
+    const { str } = useThemeX();
 
     const [toast, setToast] = useState<ToastType>({});
     const [name, setName] = useState("");

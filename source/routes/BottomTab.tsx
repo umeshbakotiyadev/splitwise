@@ -1,14 +1,11 @@
 import React from 'react'
 import { BottomTabStack } from 'utils'
-import { useThemeX } from 'hooks'
 import CustomizeBottomTabBar from './CustomizeBottomTabBar'
 import { FriendsListingScr, GroupListingScr, ProfileScr } from 'screens'
+import { StackProps } from 'Types'
 
 /** Bottom Tab Navigator */
-const BottomTab = () => {
-
-    const { font, col, str } = useThemeX();
-    const isFocused = (is: boolean): string => is ? col.PRIMARY : col.WHITE;
+const BottomTab = ({ }: StackProps<'BottomTab'>) => {
 
     return (
         <BottomTabStack.Navigator

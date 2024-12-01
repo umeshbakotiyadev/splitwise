@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { ButtonX, MasterView, PressX, TextInputX, ViewX } from 'components'
 import { useThemeX } from 'hooks'
@@ -7,7 +7,7 @@ import useAppStore from 'store'
 import { compressTextFN, isValid } from 'functions'
 import { bSpace } from 'utils'
 
-const LoginController = ({ navigation, route }: StackProps<'LoginScr'>) => {
+const LoginController = ({ navigation }: StackProps<'LoginScr'>) => {
 
     const { setUserData, firendsList, setLogin } = useAppStore();
     const { str, defStyObj } = useThemeX();
@@ -25,7 +25,7 @@ const LoginController = ({ navigation, route }: StackProps<'LoginScr'>) => {
 
     return (<MasterView title={str.LOGIN} fixed backBtn={false} jfy='center'
         toast={toast} setToast={setToast} p={bSpace} >
-        <ViewX >
+        <ViewX>
             <TextInputX
                 phNm={str.ENTER_EMAIL}
                 text={String(email).toLowerCase()}
@@ -38,11 +38,11 @@ const LoginController = ({ navigation, route }: StackProps<'LoginScr'>) => {
                 style={{ height: 40 }}
             />
             <ButtonX text={str.LOGIN} onPress={loginFN} />
-            <PressX 
-            onPress={()=>navigation.navigate('RegisterUserScr')}
-            text={str.REGISTER_NEW_USER} 
-            tSty={sty.regi_tSty} 
-            cSty={sty.regi_cSty} />
+            <PressX
+                onPress={() => navigation.navigate('RegisterUserScr')}
+                text={str.REGISTER_NEW_USER}
+                tSty={sty.regi_tSty}
+                cSty={sty.regi_cSty} />
         </ViewX>
 
     </MasterView>);

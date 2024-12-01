@@ -1,5 +1,6 @@
 import AddExpenseScr from "./AddExpenseController"
 import AddFriendScr from "./AddFriendController"
+import ExpenseDetailsScr from "./ExpenseDetailsController"
 import ExpenseListingScr from "./ExpenseListingController"
 import FriendsListingScr from "./FriendsListingController"
 import GroupListingScr from "./GroupListingController"
@@ -10,5 +11,6 @@ import RegisterUserScr from "./RegisterUserController"
 
 export {
     FriendsListingScr, AddFriendScr, ExpenseListingScr, AddExpenseScr,
-    LoginScr, RegisterUserScr, GroupListingScr, ProfileScr, MakeGroupScr
+    LoginScr, RegisterUserScr, GroupListingScr, ProfileScr, MakeGroupScr,
+    ExpenseDetailsScr
 }

@@ -11,7 +11,7 @@ import { ADD_FRIENDS_IC } from 'assets'
 const FriendsListingController = ({ navigation, route }: StackProps<'FriendsListingScr'>) => {
 
     const { getFriendsListAPI } = useAPI();
-    const { firendsList, userData } = useAppStore();
+    const { firendsList, userData, setFriensListData } = useAppStore();
     const { col, cpSty, str, friListSty, } = useThemeX();
 
     const [toast, setToast] = useState<ToastType>({});
@@ -41,9 +41,9 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
             hasNextPageRef.current = !!(res?.next);
             if (Array.isArray(res?.data)) {
                 const data = res?.data;
-                LOG(makeFriendsListForLocalStoreFN(data))
+
                 /** TEMPORARY COMMENTED **/
-                // setFriensListData(makeFriendsListForLocalStoreFN(data));
+                setFriensListData(makeFriendsListForLocalStoreFN(data));
             }
             setBottomLoading(false); setTopLoading(false); setScrLoading(false);
         }).finally(() => {
@@ -72,7 +72,7 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
                 ref={flatListRef} refreshing
                 renderItem={renderItem}
                 data={firendsListArr}
-                contentContainerStyle={{ paddingVertical: bSpace }}
+                contentContainerStyle={{ paddingVertical: bSpace, paddingBottom: 70 }}
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={() => <ViewX h={bSpace / 2} />}
                 refreshControl={<RefreshControl
@@ -82,8 +82,9 @@ const FriendsListingController = ({ navigation, route }: StackProps<'FriendsList
                         getFriendsList({ topRefresh: true });
                     }}
                 />}
+                onEndReachedThreshold={.2}
                 onEndReached={() => {
-                    if (!hasNextPageRef.current || bottomLoading || topLoading || firendsListArr?.length < 10) return;
+                    if (!hasNextPageRef.current || bottomLoading || topLoading || firendsListArr?.length > 10) return;
                     getFriendsList({ topRefresh: false, bottomRefresh: true });
                 }}
                 ListFooterComponent={() => {

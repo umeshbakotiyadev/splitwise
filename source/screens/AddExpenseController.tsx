@@ -1,13 +1,12 @@
-import { FlatList, Keyboard, StyleSheet, Text, View } from 'react-native'
+import { Keyboard, } from 'react-native'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useThemeX } from 'hooks';
 import useAppStore from 'store';
 import { expenseSharingType, expenseSharingUsersOBJType, expenseSharingUsersType, firendsListItemType, firendsListOBJType, StackProps, ToastType } from 'Types';
 import { FlatList as BSFlatList, TextInput } from 'react-native-gesture-handler';
-import { compressTextFN, generateUniqueID, getRandomImgFN, isValid, LOG } from 'functions';
-import { BottomSheetX, ButtonX, FriendsItem, ImageX, MasterView, PaidByUserItem, PressX, TextInputX, TextX, UnequallyAmountItem, ViewX } from 'components';
+import { compressTextFN, generateUniqueID, } from 'functions';
+import { BottomSheetX, ButtonX, ImageX, MasterView, PaidByUserItem, PressX, TextInputX, TextX, UnequallyAmountItem, ViewX } from 'components';
 import { bSpace } from 'utils';
-import { FadeInDown } from 'react-native-reanimated';
 import BottomSheet from '@gorhom/bottom-sheet';
 
 const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>) => {

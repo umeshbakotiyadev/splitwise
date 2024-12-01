@@ -5,7 +5,7 @@ import { FONT } from 'assets';
 import { useMemo } from 'react';
 import { defStyType } from 'Types';
 import useString from 'language';
-import { AddExpenseScrStyFN, CompoStyFN, FriendListingScrStyFN } from 'styles';
+import { AddExpenseScrStyFN, CompoStyFN, ExpenseDetailScrStyFN, ExpenseListintScrStyFN, FriendListingScrStyFN } from 'styles';
 
 /**
  * CONFIG FOR ALL THEMES RELATED GLOBAL VARIABLES OR MORE.
@@ -23,11 +23,11 @@ const useThemeXHook = () => {
     const font = FONT;
 
     /** THIS IS FOR DYNAMIC COLORS BASED ON THEME MODE -*LIGHT/DARK*- */
-    // const col: typeof _COL & typeof D_Colors = useMemo(() => theme === 'dark' ? { ..._COL, ...D_Colors } : { ..._COL, ...L_Colors }, [theme])
+    const col: typeof _COL & typeof D_Colors = useMemo(() => theme === 'dark' ? { ..._COL, ...D_Colors } : { ..._COL, ...L_Colors }, [theme])
 
     /** SIMPLY USE COLORS */
     // const col: typeof _COL & typeof D_Colors = useMemo(() => ({ ..._COL, ...L_Colors }), []);
-    const col: typeof _COL & typeof D_Colors = useMemo(() => ({ ..._COL, ...D_Colors }), []);
+    // const col: typeof _COL & typeof D_Colors = useMemo(() => ({ ..._COL, ...D_Colors }), []);
 
     /** THIS IS FOR DYNAMIC VARIABLES USE IN STYLES FUNCTIONS */
     const defStyObj: defStyType = { ...sAI, col, font, dwFN };
@@ -35,10 +35,12 @@ const useThemeXHook = () => {
     const cpSty = CompoStyFN(defStyObj);
     const friListSty = FriendListingScrStyFN(defStyObj);
     const addExpenseSty = AddExpenseScrStyFN(defStyObj);
+    const expListSty = ExpenseListintScrStyFN(defStyObj);
+    const expDetailSty = ExpenseDetailScrStyFN(defStyObj);
 
     return ({
         ...sAI, defStyObj, font, col, theme, dwFN, str,
-        cpSty, friListSty, addExpenseSty
+        cpSty, friListSty, addExpenseSty, expListSty, expDetailSty
     });
 
 }

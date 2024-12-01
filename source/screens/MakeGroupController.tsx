@@ -10,7 +10,7 @@ import { PLUSH_IC } from 'assets';
 import { FlatList } from 'react-native';
 import { compressTextFN, generateUniqueID, getRandomImgFN } from 'functions';
 
-const MakeGroupController = ({ navigation, route }: StackProps<'GorupListingScr'>) => {
+const MakeGroupController = ({ navigation, route }: StackProps<'MakeGroupScr'>) => {
 
     const { str, col, font } = useThemeX();
     const { firendsList, userData, setGroupList } = useAppStore();

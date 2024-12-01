@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { defStyType, expenseSharingType } from 'Types'
 import { useThemeX } from 'hooks'
@@ -7,47 +7,45 @@ import ImageXCompo from './XCompos/ImageXCompo'
 import { DELETE_IC, EDIT_IC, TICKET_IMG } from 'assets'
 import ViewXCompo from './XCompos/ViewXCompo'
 import TextXCompo from './XCompos/TextXCompo'
-import { LOG, Size, toNum } from 'functions'
+import { Size, toNum } from 'functions'
 import useAppStore from 'store'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import PressXCompo from './XCompos/PressXCompo'
 
-const ExpenseListingItemCompo = ({ description, expenseSharingUsers, id, isGroup, payBy, splitType, totalAmount, onDelete, onEdit }
-    : expenseSharingType & { onDelete: () => void, onEdit: () => void }) => {
+const ExpenseListingItemCompo = ({ description, expenseSharingUsers, id, isGroup, payBy, splitType, totalAmount, onDelete, onEdit, onPress }
+    : expenseSharingType & { onDelete: () => void, onEdit: () => void, onPress: () => void }) => {
 
     const { userData, firendsList } = useAppStore();
-    const { defStyObj, col, font, str } = useThemeX();
+    const { defStyObj, col, str } = useThemeX();
     const sty = styFN(defStyObj);
 
     const swipeableRef = useRef<Swipeable>(null);
 
+    /** YOU LENT, YOU BORROWED */
     const status: string = useMemo(() => {
-        if (payBy == userData?.email) return str.YOU_LET;
+        if (payBy == userData?.email) return str.YOU_LENT;
         return str.YOU_BORROWED;
     }, [userData, payBy]);
 
+    /** PAID-BY */
     const whoPaid: string = useMemo(() => {
         if (userData?.email == payBy) return (`${str.YOU} ${str.PAID} ${str.INDIAN_MOENY_SIGN}${toNum(totalAmount ?? 0)}`);
         return (`${firendsList[payBy ?? ""]?.name} ${str.PAID} ${str.INDIAN_MOENY_SIGN}${toNum(totalAmount ?? 0)}`);
     }, [userData, payBy, firendsList, totalAmount]);
 
+    /** LENT-PRISE, BORROWED-PRISE */
     const amount: number = useMemo(() => {
         let prise = 0;
         if (!expenseSharingUsers) return prise;
         if (splitType == 'equally') prise = expenseSharingUsers[userData?.email ?? ""]?.amount ?? 0;
         else {
-            LOG(expenseSharingUsers[payBy ?? "-"]?.amount);
-            if (payBy == userData?.email) {
-                for (const key in expenseSharingUsers) if (key !== userData?.email) prise = prise + (expenseSharingUsers[key ?? ""]?.amount ?? 0);
-            }
-            // else if (expenseSharingUsers[payBy ?? "-"]?.amount == 0) {
-            //     for (const key in expenseSharingUsers) if (key !== userData?.email) prise = prise + (expenseSharingUsers[key ?? ""]?.amount ?? 0);
-            // }
+            if (payBy == userData?.email) for (const key in expenseSharingUsers) if (key !== userData?.email) prise = prise + (expenseSharingUsers[key ?? ""]?.amount ?? 0);
             else prise = expenseSharingUsers[userData?.email ?? ""]?.amount ?? 0;
         }
         return prise;
     }, [expenseSharingUsers, totalAmount, splitType, userData, payBy]);
 
+    /** SWIPE ITEMS - DELETE_BTN, EDIT_BTN */
     const renderRightActions = useCallback(() => {
         return <ViewXCompo style={sty.swipe_mSty} >
             <PressXCompo onPress={() => { onEdit(); swipeableRef?.current?.close() }}
@@ -57,26 +55,26 @@ const ExpenseListingItemCompo = ({ description, expenseSharingUsers, id, isGroup
             </PressXCompo>
             <PressXCompo onPress={() => { onDelete(); swipeableRef?.current?.close() }}
                 cSty={sty.swipBtn_cSty} bgCol={col.LIGHT_RED}
-                mSty={sty.swipBtn_mSty}>
+                mSty={sty.swipBtn_mSty} mR={bSpace / 2} >
                 <DELETE_IC color={col.D_WHITE} />
             </PressXCompo>
         </ViewXCompo>
-    }, []);
+    }, [swipeableRef.current]);
 
     return (
         <Swipeable ref={swipeableRef} enabled={true} renderRightActions={renderRightActions}>
-            <View style={sty.mainSty} >
+            <TouchableOpacity activeOpacity={.8} style={sty.mainSty} onPress={onPress} >
                 <ImageXCompo source={TICKET_IMG} style={sty.ticketImgSty} resizeMode='cover' />
                 <ViewXCompo style={sty.c1Sty} >
                     <TextXCompo text={description} lines={2} tSty={sty.discriptioinNameSty} />
                     <TextXCompo text={whoPaid} tSty={sty.transactionStatusSty} />
                 </ViewXCompo>
                 <ViewXCompo style={sty.c2Sty}>
-                    <TextXCompo text={status} tSty={sty.statusSty} bgCol={status == str.YOU_LET ? col.GREEN : col.LIGHT_RED} />
+                    <TextXCompo text={status} tSty={sty.statusSty} bgCol={status == str.YOU_LENT ? col.GREEN : col.LIGHT_RED} />
                     <TextXCompo text={str.INDIAN_MOENY_SIGN + toNum(amount)}
-                        tSty={sty.moneySty} fColor={status == str.YOU_LET ? col.GREEN : col.LIGHT_RED} />
+                        tSty={sty.moneySty} fColor={status == str.YOU_LENT ? col.GREEN : col.LIGHT_RED} />
                 </ViewXCompo>
-            </View>
+            </TouchableOpacity>
         </Swipeable>
     )
 }

@@ -6,7 +6,7 @@ import { ButtonX, ImageX, MasterView, TextX, ViewX } from 'components';
 import useAppStore from 'store';
 import { bSpace } from 'utils';
 
-const ProfileController = ({ navigation, route }: StackProps<'AddExpenseScr'>) => {
+const ProfileController = ({ navigation, route }: StackProps<'ProfileScr'>) => {
 
     const { setUserData, setLogin, userData } = useAppStore();
     const { col, font, friListSty, str, defStyObj } = useThemeX();
