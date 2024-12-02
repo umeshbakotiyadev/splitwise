@@ -1,13 +1,13 @@
 {
-    "PRIMARY": "#FFB200",
-    "SECONDARY": "#347928",
+    "PRIMARY": "#2CD4C3",
+    "SECONDARY": "#015756",
     "THIRD": "#677D6A",
-    "FOURTH": "#D6BD98",
+    "FOURTH": "#015756",
     "D_WHITE": "white",
     "D_BLACK": "black",
-    "HEADER_BG": "#FFB200",
-    "HEADER_TITLE": "black",
-    "HEADER_SVG": "black",
+    "HEADER_BG": "#015756",
+    "HEADER_TITLE": "white",
+    "HEADER_SVG": "white",
     "SIGNAL_WHITE": "#F2F2F7",
     "ALERTBOX_BG": "#F2F2F7",
     "LIGHT_RED": "#F89580",
@@ -20,5 +20,5 @@
     "BOTTOMSHEET_BG": "#EEEDEB",
     "UNEQUALLY_ITEM_BG": "#EEEDEB",
     "GREEN": "#88C273",
-    "BOOTOM_TAB_BG": "#222222"
+    "BOOTOM_TAB_BG": "#015756"
 }

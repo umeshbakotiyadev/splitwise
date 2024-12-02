@@ -1,3 +1,4 @@
+const APP_LOGO = require("./appLogo.png");
 const IMG_1 = require("./img1.jpg");
 const IMG_2 = require("./img2.jpg");
 const IMG_3 = require("./img3.jpg");
@@ -13,5 +14,5 @@ const TICKET_IMG = require("./ticket.jpg");
 
 export {
     IMG_1, IMG_2, IMG_3, IMG_4, IMG_5, IMG_7, IMG_8, IMG_9, IMG_10, IMG_11, IMG_12,
-    TICKET_IMG
+    TICKET_IMG, APP_LOGO
 }

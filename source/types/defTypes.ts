@@ -418,6 +418,7 @@ type groupItemType = {
 
 type groupItemOBJType = { [key: string]: groupItemType };
 
+type BootSplashHideType = (config?: { fade?: boolean }) => Promise<void>;
 
 export type {
     StackProps, AppStackParamListType, appStoreType,
@@ -426,6 +427,6 @@ export type {
     ApiCallType, ApiResType, ToastType, colorType, BottomSheetXType, setIAppStateType,
     firendsListOBJType, firendsListItemType, expenseSharingUsersType, expenseSharingType,
     splitType, expenseSharingUsersOBJType, expenseSharingOBJType, groupItemOBJType,
-    groupItemType
+    groupItemType, BootSplashHideType
 
 }
