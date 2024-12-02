@@ -8,6 +8,7 @@ import PressXCompo from './PressXCompo';
 import TextXCompo from './TextXCompo';
 import Animated from 'react-native-reanimated';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { isANDROID } from 'utils';
 
 const TextInputXCompo = ({
     onBlur, reff, phNm, text, lines, onChangeT, onSubEdit, rKeyType, kbType,
@@ -31,7 +32,7 @@ const TextInputXCompo = ({
     return (
         <Animated.View style={[defStyFN(defStyObj), sty.container, defStyObj?.style]} onLayout={onBoxLayout} >
             {topSvg && topSvg}
-            <ViewXCompo f={1} fD='row' >
+            <ViewXCompo fD='row'>
 
                 <ViewXCompo f={1} >
 
@@ -122,6 +123,8 @@ const TextInputXCompo = ({
                                         returnKeyType={rKeyType}
                                         onBlur={onBlur}
                                         keyboardType={kbType}
+                                        // textBreakStrategy='highQuality'
+                                        // lineBreakStrategyIOS='standard'
                                         autoCorrect={autoCorrect}
                                         autoCapitalize={autoCapitalize}
                                         autoComplete={autoComplete}
@@ -134,13 +137,10 @@ const TextInputXCompo = ({
                                         readOnly={readOnly}
                                         maxLength={maxLength}
                                         style={[
-                                            // sty.inputSty,
                                             cpSty.inputSty1,
                                             {
-                                                // textAlignVertical: multiline ? 'top' : undefined,
-                                                verticalAlign: multiline ? 'top' : undefined,
-                                                // textAlignVertical: multiline ? 'bottom' : undefined,
-                                                // verticalAlign: multiline ? 'bottom' : undefined,
+                                                verticalAlign: (multiline && isANDROID) ? 'top' : undefined,
+                                                flex: 1,
                                             },
                                             inputSty]}
                                         editable={editable}
@@ -197,23 +197,11 @@ const styFN = ({ col, font }: defStyType) => StyleSheet.create({
         color: col.INPUT_TEXT_LABLE_COL,
         fontWeight: '400',
     },
-    inputSty: {
-        flex: 1,
-        fontSize: Size(18),
-        color: col.D_BLACK,
-        fontFamily: font.REGULAR,
-        // dont increase padding,
-        // if you remove then padding is incrase i android
-        padding: 0
-        // fontWeight: '500',
-        // textAlignVertical: 'bottom',
-        // verticalAlign: 'bottom',
-        // backgroundColor: 'red'
-    },
 
     mSty: {
         width: "100%",
         flexDirection: 'row',
+        height: 40,
     },
 
     lBtn: {

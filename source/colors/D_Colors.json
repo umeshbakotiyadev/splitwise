@@ -20,5 +20,8 @@
     "BOTTOMSHEET_BG": "#343131",
     "UNEQUALLY_ITEM_BG": "#343131",
     "GREEN": "#88C273",
-    "BOOTOM_TAB_BG": "#222222"
+    "BOOTOM_TAB_BG": "#222222",
+    "TOAST_BG": "rgba(256,256,256,0.2)",
+    "TOAST_TEXT": "white",
+    "TOAST_OUTLINE": "rgba(0,0,0,.1)",
 }

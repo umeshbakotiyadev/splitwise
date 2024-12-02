@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { ButtonX, MasterView, PressX, TextInputX, ViewX } from 'components'
 import { useThemeX } from 'hooks'
 import { defStyType, StackProps, ToastType } from 'Types'
 import useAppStore from 'store'
-import { compressTextFN, isValid } from 'functions'
+import { _HEIGHT, _WIDTH, compressTextFN, isValid } from 'functions'
 import { bSpace } from 'utils'
 
 const LoginController = ({ navigation }: StackProps<'LoginScr'>) => {
@@ -34,8 +34,6 @@ const LoginController = ({ navigation }: StackProps<'LoginScr'>) => {
                 autoComplete='email'
                 onSubEdit={loginFN}
                 rKeyType='done'
-                inputSty={{ textAlign: 'center' }}
-                style={{ height: 40 }}
             />
             <ButtonX text={str.LOGIN} onPress={loginFN} />
             <PressX

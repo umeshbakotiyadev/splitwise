@@ -26,7 +26,7 @@ const AlertBoxCompo = ({ msg, show, showIC = true, setToast = () => { },
         }
     }, [show])
 
-    if (!show) return <></>
+    if (!show) return (<></>);
 
     return (
         <AnimatedTouchableOpacity
@@ -35,7 +35,7 @@ const AlertBoxCompo = ({ msg, show, showIC = true, setToast = () => { },
             onPress={onPress} activeOpacity={1}
             style={[
                 absolute ? cpSty.alertBanner_abContainerSty : cpSty.alertBanner_containerSty,
-                { backgroundColor: bgCol ? bgCol : col.ALERTBOX_BG },
+                { backgroundColor: bgCol ? bgCol : col.TOAST_BG },
                 cSty ? cSty : {},
             ]}>
             {children ? children : (<>
