@@ -178,7 +178,7 @@ const styFN = ({ col, font }: defStyType) => StyleSheet.create({
     container: {
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: col.INPUT_TEXT_PH_COL,
+        borderColor: col.INPUT_TEXT_OUTLINE,
         paddingHorizontal: 15,
         paddingVertical: 7,
         backgroundColor: col.INPUT_BG,

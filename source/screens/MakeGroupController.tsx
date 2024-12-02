@@ -8,7 +8,7 @@ import useAppStore from 'store';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { PLUSH_IC } from 'assets';
 import { FlatList } from 'react-native';
-import { compressTextFN, generateUniqueID, getRandomImgFN } from 'functions';
+import { _HEIGHT, compressTextFN, generateUniqueID, getRandomImgFN } from 'functions';
 
 const MakeGroupController = ({ navigation, route }: StackProps<'MakeGroupScr'>) => {
 
@@ -66,12 +66,15 @@ const MakeGroupController = ({ navigation, route }: StackProps<'MakeGroupScr'>) 
                 <ButtonX text={str.SUBMITE} onPress={makeGroupFN} />
             </ViewX>}
             modals={
-                <BottomSheetX snapPoints={["50%", "80%"]} bRef={bottomSheetRef} >
-                    <BottomSheetFlatList
+                <BottomSheetX snapPoints={[_HEIGHT * .7]} bRef={bottomSheetRef} >
+                    <FlatList
                         data={Object.values(firendsList).filter((item) => userData?.email !== item?.email).reverse()}
                         renderItem={usersRenderItem}
                         ItemSeparatorComponent={() => <ViewX h={5} />}
                         keyExtractor={(item, index) => index.toString()} />
+                    <ButtonX
+                        text={str.DONE} mSty={{ marginHorizontal: bSpace, marginVertical: bSpace / 2 }}
+                        onPress={() => bottomSheetRef?.current?.close()} />
                 </BottomSheetX>
             } >
             <TextInputX
@@ -81,8 +84,7 @@ const MakeGroupController = ({ navigation, route }: StackProps<'MakeGroupScr'>) 
                 autoCapitalize='words'
                 autoComplete='name'
                 onSubEdit={() => emailRef.current?.focus()}
-                style={{ height: 40, marginBottom: 0 }}
-                inputSty={{ textAlign: 'center' }}
+                style={{ marginBottom: 0 }}
                 rKeyType='next' mH={bSpace / 2}
             />
             <ViewX aItem='center' pV={bSpace / 2} >

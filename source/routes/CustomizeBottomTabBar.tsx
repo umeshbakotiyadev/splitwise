@@ -18,9 +18,9 @@ const CustomizeBottomTabBar = ({ state, descriptors, navigation }: any) => {
 
         function getIcon(name: string): { svg: ReactNode } {
             switch (name) {
-                case 'FriendsListingScr': return ({ svg: <PERSON_IC color={isFocused ? col.D_BLACK : col.D_WHITE} /> })
-                case 'GroupListingScr': return ({ svg: <GROUP_IC color={isFocused ? col.D_BLACK : col.D_WHITE} /> })
-                case 'ProfileScr': return ({ svg: <PROFILE_IC color={isFocused ? col.D_BLACK : col.D_WHITE} /> })
+                case 'FriendsListingScr': return ({ svg: <PERSON_IC color={isFocused ? col.WHITE : col.BLACK} /> })
+                case 'GroupListingScr': return ({ svg: <GROUP_IC color={isFocused ? col.WHITE : col.BLACK} /> })
+                case 'ProfileScr': return ({ svg: <PROFILE_IC color={isFocused ? col.WHITE : col.BLACK} /> })
                 default: return { svg: <></> };
             }
         }
@@ -32,7 +32,7 @@ const CustomizeBottomTabBar = ({ state, descriptors, navigation }: any) => {
 
         return (
             <PressX key={index.toString()} onPress={onPress}
-                mSty={sty.btnMSty} cSty={sty.btnCSty} bgCol={isFocused ? col.PRIMARY : col.FOURTH} >
+                mSty={sty.btnMSty} cSty={sty.btnCSty} bgCol={isFocused ? col.PRIMARY : col.SECONDARY} >
                 {getIcon(route?.name)?.svg}
             </PressX>)
     }), [state, navigation, descriptors]);

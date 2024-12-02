@@ -29,7 +29,7 @@ const ExpenseListingController = ({ navigation, route }: StackProps<'ExpenseList
         for (const item in expOBJ) {
             const expenseSharingUsers: expenseSharingUsersOBJType = expOBJ[item]?.expenseSharingUsers || {};
             let isTRUE: boolean = true;
-            for (const key in avaialbleFRIs) { isTRUE = (!!expenseSharingUsers[key]); if (!isTRUE) break; }
+            for (const key in avaialbleFRIs) { isTRUE = (!!expenseSharingUsers[key] && isGroup == expOBJ[item]?.isGroup); if (!isTRUE) break; }
             if (isTRUE) obj[item] = expOBJ[item];
         }
         return obj;
@@ -43,10 +43,14 @@ const ExpenseListingController = ({ navigation, route }: StackProps<'ExpenseList
             const expenseSharingUsers = expensesOBJ[ID]?.expenseSharingUsers || {};
             if (payBy == userData?.email) {
                 if (splitType == 'equally') totalAmount = totalAmount + (expenseSharingUsers[userData?.email ?? ""]?.amount ?? 0);
-                else for (const key in expenseSharingUsers) if (key !== userData?.email) totalAmount = totalAmount + (expenseSharingUsers[key ?? ""]?.amount ?? 0);
+                else {
+                    for (const key in expenseSharingUsers) if (key !== userData?.email) totalAmount = totalAmount + (expenseSharingUsers[key ?? ""]?.amount ?? 0);
+                }
             } else {
                 if (splitType == 'equally') totalAmount = totalAmount - (expenseSharingUsers[userData?.email ?? ""]?.amount ?? 0);
-                else for (const key in expenseSharingUsers) if (key !== userData?.email) totalAmount = totalAmount - (expenseSharingUsers[key ?? ""]?.amount ?? 0);
+                else {
+                    for (const key in expenseSharingUsers) if (key !== payBy) totalAmount = totalAmount - (expenseSharingUsers[key ?? ""]?.amount ?? 0);
+                }
             }
         }
         return totalAmount;
@@ -65,7 +69,7 @@ const ExpenseListingController = ({ navigation, route }: StackProps<'ExpenseList
             onEdit={() => navigation.navigate("AddExpenseScr", { friends: avaialbleFRIs, isGroup, isEdit: true, expItem: item })}
             onPress={() => { navigation?.navigate("ExpenseDetailsScr", { expenseItem: item, isGroup: true }) }}
         />);
-    }, [expensesOBJ, expenses, avaialbleFRIs, isGroup]);
+    }, [expensesOBJ, expenses, avaialbleFRIs, isGroup, navigation]);
 
     return (
         <MasterView title={scrName} fixed >

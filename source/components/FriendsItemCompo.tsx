@@ -35,11 +35,14 @@ const FriendsItemCompo = (item: firendsListItemType & { onPress: () => void, isG
     const expensesOBJ = useMemo(() => {
         let obj: expenseSharingOBJType = {};
         const expOBJ = { ...expenses };
-        for (const key in expOBJ) {
-            const expenseSharingUsers: expenseSharingUsersOBJType = expOBJ[key]?.expenseSharingUsers || {};
+        for (const expKEY in expOBJ) {
+            const expenseSharingUsers: expenseSharingUsersOBJType = expOBJ[expKEY]?.expenseSharingUsers || {};
             let isTRUE: boolean = true;
-            for (const key in avaialbleFRIs) { isTRUE = (!!expenseSharingUsers[key]); if (!isTRUE) break; }
-            if (isTRUE) obj[key] = expOBJ[key];
+            for (const friKEY in avaialbleFRIs) {
+                isTRUE = Boolean(!!expenseSharingUsers[friKEY] && isGroup == expOBJ[expKEY]?.isGroup);
+                if (!isTRUE) break;
+            }
+            if (isTRUE) obj[expKEY] = expOBJ[expKEY];
         }
         return obj;
     }, [expenses, avaialbleFRIs]);
@@ -52,10 +55,14 @@ const FriendsItemCompo = (item: firendsListItemType & { onPress: () => void, isG
             const expenseSharingUsers = expensesOBJ[ID]?.expenseSharingUsers || {};
             if (payBy == userData?.email) {
                 if (splitType == 'equally') totalAmount = totalAmount + (expenseSharingUsers[userData?.email ?? ""]?.amount ?? 0);
-                else for (const key in expenseSharingUsers) if (key !== userData?.email) totalAmount = totalAmount + (expenseSharingUsers[key ?? ""]?.amount ?? 0);
+                else {
+                    for (const key in expenseSharingUsers) if (key !== userData?.email) totalAmount = totalAmount + (expenseSharingUsers[key ?? ""]?.amount ?? 0);
+                }
             } else {
                 if (splitType == 'equally') totalAmount = totalAmount - (expenseSharingUsers[userData?.email ?? ""]?.amount ?? 0);
-                else for (const key in expenseSharingUsers) if (key !== userData?.email) totalAmount = totalAmount - (expenseSharingUsers[key ?? ""]?.amount ?? 0);
+                else {
+                    for (const key in expenseSharingUsers) if (key !== payBy) totalAmount = totalAmount - (expenseSharingUsers[key ?? ""]?.amount ?? 0);
+                }
             }
         }
         return totalAmount;

@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { defStyType, expenseSharingType } from 'Types'
 import { useThemeX } from 'hooks'
@@ -12,9 +12,9 @@ import useAppStore from 'store'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import PressXCompo from './XCompos/PressXCompo'
 
-const ExpenseListingItemCompo = ({ description, expenseSharingUsers, id, isGroup, payBy, splitType, totalAmount, onDelete, onEdit, onPress }
-    : expenseSharingType & { onDelete: () => void, onEdit: () => void, onPress: () => void }) => {
+const ExpenseListingItemCompo = (iTEM: expenseSharingType & { onDelete: () => void, onEdit: () => void, onPress: () => void }) => {
 
+    const { description, expenseSharingUsers, id, isGroup, payBy, splitType, totalAmount, onDelete, onEdit, onPress } = iTEM;
     const { userData, firendsList } = useAppStore();
     const { defStyObj, col, str } = useThemeX();
     const sty = styFN(defStyObj);
@@ -36,14 +36,16 @@ const ExpenseListingItemCompo = ({ description, expenseSharingUsers, id, isGroup
     /** LENT-PRISE, BORROWED-PRISE */
     const amount: number = useMemo(() => {
         let prise = 0;
-        if (!expenseSharingUsers) return prise;
-        if (splitType == 'equally') prise = expenseSharingUsers[userData?.email ?? ""]?.amount ?? 0;
+        const expUSERs = { ...expenseSharingUsers };
+        if (splitType == 'equally') prise = expUSERs[userData?.email ?? ""]?.amount ?? 0;
         else {
-            if (payBy == userData?.email) for (const key in expenseSharingUsers) if (key !== userData?.email) prise = prise + (expenseSharingUsers[key ?? ""]?.amount ?? 0);
-            else prise = expenseSharingUsers[userData?.email ?? ""]?.amount ?? 0;
+            if (payBy == userData?.email) {
+                for (const key in expUSERs) if (key !== userData?.email) prise = prise + (expUSERs[key ?? ""]?.amount ?? 0);
+            }
+            else prise = expUSERs[userData?.email ?? ""]?.amount ?? 0;
         }
         return prise;
-    }, [expenseSharingUsers, totalAmount, splitType, userData, payBy]);
+    }, [iTEM]);
 
     /** SWIPE ITEMS - DELETE_BTN, EDIT_BTN */
     const renderRightActions = useCallback(() => {
@@ -59,7 +61,7 @@ const ExpenseListingItemCompo = ({ description, expenseSharingUsers, id, isGroup
                 <DELETE_IC color={col.D_WHITE} />
             </PressXCompo>
         </ViewXCompo>
-    }, [swipeableRef.current]);
+    }, [swipeableRef.current, iTEM]);
 
     return (
         <Swipeable ref={swipeableRef} enabled={true} renderRightActions={renderRightActions}>

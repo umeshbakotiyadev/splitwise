@@ -141,17 +141,16 @@ function makeFriendsListForLocalStoreFN(data: Array<firendsListItemType>): firen
 
 const getRandomNumFN = (max: number): number => Math.ceil(Math.random() * max);
 const getRandomImgFN = (): any => ([
-    "https://i.pinimg.com/736x/cb/53/84/cb5384e383582501028bb3a69161f89e.jpg",
-    "https://i.pinimg.com/736x/80/52/fc/8052fca36498e96f33f03fa21446a664.jpg",
-    "https://i.pinimg.com/736x/eb/02/ea/eb02ea9b15eab6b211005334674e5776.jpg",
-    "https://i.pinimg.com/736x/57/15/06/57150622c58b78b264219f72507970b3.jpg",
-    "https://i.pinimg.com/474x/a3/1f/d4/a31fd4563330df90f1781f63e746b6c4.jpg",
-    "https://i.pinimg.com/474x/70/fb/e9/70fbe9647fceb5f78dfb61ff7a66d818.jpg",
-    "https://i.pinimg.com/474x/c7/7a/98/c77a98213ba70794d8150f5bc9744c46.jpg",
-    "https://i.pinimg.com/474x/6f/f5/81/6ff5816b5e6005ed50f29a40f50508a5.jpg",
-    "https://i.pinimg.com/474x/bd/3a/78/bd3a788dd24d4ec45435cb808447249f.jpg",
-    "https://i.pinimg.com/474x/c4/72/cd/c472cd63702d173be649da423f2c0262.jpg",
-    "https://i.pinimg.com/474x/9a/e1/3a/9ae13a3d8caa2653486ce6af2f835d3a.jpg"])[getRandomNumFN(11)];
+    "https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149619508.jpg?semt=ais_hybrid",
+    "https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149622021.jpg",
+    "https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149611030.jpg",
+    "https://www.artnews.com/wp-content/uploads/2022/01/unnamed-2.png?w=631",
+    "https://miro.medium.com/v2/resize:fit:628/1*xm2-adeU3YD4MsZikpc5UQ.png",
+    "https://i.em.com.br/dnHxQxkq9VLi7PsmMF3TVNyxi6w=/1220x720/smart/imgsapp.em.com.br/app/noticia_127983242361/2023/09/22/1565597/nft-macaco-fumando_1_34556.png",
+    "https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149619505.jpg?semt=ais_hybrid",
+    "https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149619499.jpg",
+    "https://i0.wp.com/www.technollama.co.uk/wp-content/uploads/2021/11/ape.jpg?ssl=1",
+    "https://i.pinimg.com/736x/f5/29/e2/f529e277826ba8aa2ad3dadc84eb8071.jpg"])[getRandomNumFN(9)];
 
 
 

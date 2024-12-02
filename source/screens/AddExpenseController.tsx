@@ -1,10 +1,10 @@
-import { Keyboard, } from 'react-native'
+import { Keyboard, ScrollView, } from 'react-native'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useThemeX } from 'hooks';
 import useAppStore from 'store';
 import { expenseSharingType, expenseSharingUsersOBJType, expenseSharingUsersType, firendsListItemType, firendsListOBJType, StackProps, ToastType } from 'Types';
 import { FlatList as BSFlatList, TextInput } from 'react-native-gesture-handler';
-import { compressTextFN, generateUniqueID, } from 'functions';
+import { compressTextFN, generateUniqueID, LOG, } from 'functions';
 import { BottomSheetX, ButtonX, ImageX, MasterView, PaidByUserItem, PressX, TextInputX, TextX, UnequallyAmountItem, ViewX } from 'components';
 import { bSpace } from 'utils';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -69,7 +69,7 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
             else if (totalAMOUNTEmail == payBy) { return setToast({ show: true, msg: str.YOU_CANNOT }); }
             expenseOBJ = { id: uniqueID, description, payBy, splitType, isGroup, expenseSharingUsers: unequallyExpenseOBJ, totalAmount: amountNUM };
         }
-        setExpense({ [uniqueID]: { ...expenseOBJ } });
+        setExpense({ [uniqueID]: expenseOBJ });
         navigation?.goBack();
     }
 
@@ -121,27 +121,27 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
         } >
 
         {/* EXPENSE SHARING USERS LISTING */}
-        <ViewX fD='row' jfy='center' pB={bSpace} >
-            {Object.values(friendsOBJs).map((item, index) => {
-                return <ImageX
-                    key={index.toString()}
-                    uri={item?.pImg}
-                    h={45} ar={1} bR={100} />
-            })}
-        </ViewX>
+        <ViewX h={45} mB={bSpace} >
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                <ViewX jfy='center' fD='row'>
+                    {Object.values(friendsOBJs).map((item, index) => {
+                        return <ImageX
+                            key={index.toString()} uri={item?.pImg}
+                            h={"100%"} ar={1} bR={100} mH={3} />
+                    })}
+                </ViewX>
+            </ScrollView>
+        </ViewX >
 
         {/* DESCRIPTION INPUTBOX */}
         <TextInputX
             reff={descriptionlRef}
-            phNm={str.ENTER_DESCRIPTIOIN}
+            phNm={str.ENTER_DESCRIPTION}
             text={String(description).toLowerCase()}
             onChangeT={setDescription}
             kbType='default'
             onSubEdit={addExpenseFN}
             rKeyType='done'
-            inputSty={{ textAlign: 'center', }}
-            style={{ borderColor: undefined }}
-            multiline
         />
 
         {/* AMOUNT INPUTBOX */}
@@ -153,8 +153,6 @@ const AddExpenseController = ({ navigation, route }: StackProps<'AddExpenseScr'>
             onSubEdit={addExpenseFN}
             kbType='numeric'
             rKeyType='done'
-            inputSty={{ textAlign: 'center', }}
-            style={{ borderColor: undefined }}
             maxLength={8}
         />
 

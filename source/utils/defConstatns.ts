@@ -5,7 +5,7 @@ import { Dimensions, Platform, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const IS_DEV: boolean = false;
+const IS_DEV: boolean = true;
 
 const Stack = createNativeStackNavigator<AppStackParamListType>();
 const BottomTabStack = createBottomTabNavigator();
